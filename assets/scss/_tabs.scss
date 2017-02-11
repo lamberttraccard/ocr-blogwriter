@@ -1,0 +1,9 @@
+#tabs-container {
+  section {
+    display: none;
+
+    &.is-active {
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block siteTitle %}Mon compte{% endblock %}
+{% block title %}Mon compte{% endblock %}
+{% block subtitle %}<span class="is-capitalize">{{ app.user.username }}</span>{% endblock %}
+
+{% block heroBodyExtra %}
+    <a href="{{ path('logout') }}" class="button is-primary is-outlined is-inverted has-mt-1">
+        <span>Se déconnecter</span><span class="icon"><i class="fa fa-sign-out"></i></span>
+    </a>
+{% endblock %}
+
+{% block content %}
+    <section class="section is-medium the-content">
+        <div class="container">
+
+        </div>
+    </section>
+{% endblock %}

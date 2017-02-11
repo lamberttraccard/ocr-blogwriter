@@ -14,3 +14,4 @@ $app->get('/admin/user/{id}/delete', '\BlogWriter\Controller\AdminController::re
 
 $app->get('/login', '\BlogWriter\Controller\HomeController::loginAction')->bind('login');
 $app->get('/admin', '\BlogWriter\Controller\AdminController::indexAction')->bind('admin');
+$app->get('/account', '\BlogWriter\Controller\AdminController::accountAction')->bind('account');

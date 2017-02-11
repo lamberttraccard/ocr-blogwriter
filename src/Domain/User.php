@@ -96,6 +96,11 @@ class User implements UserInterface
         return $this;
     }
 
+    public function getFormatedRole()
+    {
+        return strtolower(preg_replace('#(ROLE_)(.)#', '$2', $this->role));
+    }
+
     /**
      * @inheritDoc
      */

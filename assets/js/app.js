@@ -1,3 +1,10 @@
 import Tabs from "./class/Tabs";
+import Notification from "./class/Notification";
 
-//let tabs = new Tabs(document.getElementById('tabs'));
+
+//Notification
+new Notification();
+
+// Tabs
+let tabsEl = document.getElementById('tabs');
+let tabs = tabsEl ? new Tabs() : null;

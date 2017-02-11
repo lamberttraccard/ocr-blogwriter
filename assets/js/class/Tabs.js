@@ -1,8 +1,12 @@
 const defaults = {
+    tabsSelector: '#tabs ul > li',
+    itemsSelector: '#tabs-container > section',
+    tabActiveClass: 'is-active',
+    itemActiveClass: 'is-active',
     start: 0
 };
 
-class Tabs {
+export default class Tabs {
 
     static extend(a, b) {
         for (let key in b) {
@@ -13,17 +17,16 @@ class Tabs {
         return a;
     }
 
-    constructor(el, options) {
-        this.el = el;
+    constructor(options) {
         this.options = Tabs.extend(defaults, options);
         this.init();
     }
 
     init() {
         // tabs elements
-        this.tabs = this.el.querySelectorAll('.tabs__nav > ul > li');
+        this.tabs = document.querySelectorAll(this.options.tabsSelector);
         // content items
-        this.items = this.el.querySelectorAll('.tabs__container > section');
+        this.items = document.querySelectorAll(this.options.itemsSelector);
         // current index
         this.current = -1;
         // show current content item
@@ -44,14 +47,12 @@ class Tabs {
 
     show(idx) {
         if (this.current >= 0) {
-            this.tabs[this.current].className = '';
-            this.items[this.current].className = '';
+            this.tabs[this.current].classList.remove(this.options.tabActiveClass);
+            this.items[this.current].classList.remove(this.options.itemActiveClass);
         }
         // change current
         this.current = idx != undefined ? idx : this.options.start >= 0 && this.options.start < this.items.length ? this.options.start : 0;
-        this.tabs[this.current].className = 'tab-current';
-        this.items[this.current].className = 'content-current';
+        this.tabs[this.current].classList.add(this.options.tabActiveClass);
+        this.items[this.current].classList.add(this.options.itemActiveClass);
     };
 }
-
-export default Tabs;

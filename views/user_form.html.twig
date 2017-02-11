@@ -6,17 +6,6 @@
 {% block subtitle %}{% endblock %}
 
 {% block content %}
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="notification is-success">
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-    {% if form_errors(userForm.password.first) %}
-        <div class="notification is-danger">
-            {{ form_errors(userForm.password.first) }}
-        </div>
-    {% endif %}
-
     <section class="section is-medium">
         <div class="container">
             <div class="panel">

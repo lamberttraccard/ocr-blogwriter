@@ -14,7 +14,19 @@ class AdminController {
 
     public function indexAction(Application $app)
     {
-        return $app['twig']->render('admin.html.twig', array());
+        $episodes = $app['dao.episode']->findAll();
+        $comments = $app['dao.comment']->findAll();
+//        die(var_dump($comments));
+        $users = $app['dao.user']->findAll();
+        return $app['twig']->render('admin.html.twig', array(
+            'episodes' => $episodes,
+            'comments' => $comments,
+            'users' => $users));
+    }
+
+    public function accountAction(Application $app)
+    {
+        return $app['twig']->render('account.html.twig', array());
     }
 
     public function addEpisodeAction(Request $request, Application $app)

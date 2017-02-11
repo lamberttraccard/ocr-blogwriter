@@ -24,11 +24,28 @@
                         </span>
                     </div>
                     <div class="nav-right">
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <span class="nav-item is-capitalize">
+                                Bienvenue, {{ app.user.username }}
+                            </span>
+                        {% endif %}
                         <span class="nav-item">
-                            <a href="{{ path('login') }}" class="button is-primary is-inverted is-outlined">
+                            {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('admin') }}" class="button is-primary is-inverted is-outlined">
+                                <span class="icon"><i class="fa fa-cog"></i></span>
+                                <span>Administration</span>
+                            </a>
+                            {% elseif is_granted('IS_AUTHENTICATED_FULLY') %}
+                            <a href="{{ path('account') }}" class="button is-primary is-inverted is-outlined">
                                 <span class="icon"><i class="fa fa-user"></i></span>
+                                <span>Mon compte</span>
+                            </a>
+                            {% else %}
+                            <a href="{{ path('login') }}" class="button is-primary is-inverted is-outlined">
+                                <span class="icon"><i class="fa fa-sign-in"></i></span>
                                 <span>Se connecter</span>
                             </a>
+                            {% endif %}
                         </span>
                     </div>
                 </div>
@@ -38,6 +55,7 @@
             <div class="container has-text-centered">
                 <h1 class="title is-1">{% block title %}{% endblock %}</h1>
                 <h2 class="subtitle is-4">{% block subtitle %}{% endblock %}</h2>
+                {% block heroBodyExtra %}{% endblock %}
             </div>
         </div>
         <div class="hero-foot">
@@ -45,6 +63,14 @@
         </div>
     </header>
     <main>
+        {% for flashMessage in app.session.flashbag.get('success') %}
+            <div class="container has-mt-2">
+                <div class="notification is-success">
+                    {{ flashMessage }}
+                    <button class="delete"></button>
+                </div>
+            </div>
+        {% endfor %}
         {% block content %}{% endblock %}
     </main>
     <footer class="footer">

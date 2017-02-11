@@ -4,11 +4,17 @@
 {% block title %}Administration{% endblock %}
 {% block subtitle %}{% endblock %}
 
+{% block heroBodyExtra %}
+    <a href="{{ path('logout') }}" class="button is-primary is-outlined is-inverted has-mt-1">
+        <span>Se déconnecter</span><span class="icon"><i class="fa fa-sign-out"></i></span>
+    </a>
+{% endblock %}
+
 {% block heroFoot %}
-    <nav class="tabs is-boxed is-fullwidth">
+    <nav id="tabs" class="tabs is-boxed is-fullwidth">
         <div class="container">
             <ul>
-                <li class="is-active"><a>Episodes</a></li>
+                <li><a>Episodes</a></li>
                 <li><a>Commentaires</a></li>
                 <li><a>Utilisateurs</a></li>
             </ul>
@@ -17,5 +23,114 @@
 {% endblock %}
 
 {% block content %}
+    <section class="section is-medium the-content">
+        <div id="tabs-container" class="container">
 
+            <section>
+                <a href="{{ path('admin_episode_add') }}" class="button is-primary is-medium has-mb-2">
+                    <span>Ajouter un episode</span><span class="icon"><i class="fa fa-plus-circle"></i></span>
+                </a>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Titre</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for episode in episodes %}
+                        <tr>
+                            <td>{{ episode.id }}</td>
+                            <td class="is-capitalize">{{ episode.title }}</td>
+                            <td class="has-text-right">
+                                <a href="{{ path('episode', {'id': episode.id }) }}" class="button is-info">
+                                    <span class="icon"><i class="fa fa-eye"></i></span>
+                                </a>
+                                <a href="{{ path('admin_episode_edit', {'id': episode.id }) }}"
+                                   class="button is-warning">
+                                    <span class="icon"><i class="fa fa-edit"></i></span>
+                                </a>
+                                <a href="{{ path('admin_episode_delete', {'id': episode.id }) }}"
+                                   class="button is-danger">
+                                    <span class="icon"><i class="fa fa-remove"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Auteur</th>
+                        <th>Episode</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for comment in comments %}
+                        <tr>
+                            <td>{{ comment.id }}</td>
+                            <td class="is-capitalize">{{ comment.author.username }}</td>
+                            <td class="is-capitalize">{{ comment.episode.title }}</td>
+                            <td class="has-text-right">
+                                <a href="{{ path('episode', {'id' : comment.episode.id}) }}#comment-{{ comment.id }}"
+                                   class="button is-info">
+                                    <span class="icon"><i class="fa fa-eye"></i></span>
+                                </a>
+                                <a href="{{ path('admin_comment_edit', {'id': comment.id }) }}"
+                                   class="button is-warning">
+                                    <span class="icon"><i class="fa fa-edit"></i></span>
+                                </a>
+                                <a href="{{ path('admin_comment_delete', {'id': comment.id }) }}"
+                                   class="button is-danger">
+                                    <span class="icon"><i class="fa fa-remove"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            <section>
+                <a href="{{ path('admin_user_add') }}" class="button is-primary is-medium has-mb-2">
+                    <span>Ajouter un utilisateur</span><span class="icon"><i class="fa fa-plus-circle"></i></span>
+                </a>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td class="is-capitalize">{{ user.username }}</td>
+                            <td class="is-capitalize">{{ user.formatedRole }}</td>
+                            <td class="has-text-right">
+                                <a href="{{ path('admin_user_edit', {'id': user.id }) }}"
+                                   class="button is-warning">
+                                    <span class="icon"><i class="fa fa-edit"></i></span>
+                                </a>
+                                <a href="{{ path('admin_user_delete', {'id': user.id }) }}"
+                                   class="button is-danger">
+                                    <span class="icon"><i class="fa fa-remove"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+
+        </div>
+    </section>
 {% endblock %}

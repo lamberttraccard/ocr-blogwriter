@@ -5,33 +5,25 @@
 {% block subtitle %}{% endblock %}
 
 {% block content %}
-    {% if error %}
-        <div class="notification is-danger">
-            <button class="delete"></button>
-            <strong>Login failed!</strong> {{ error }}
-        </div>
-    {% endif %}
     <section class="section is-medium">
         <div class="container">
-            <div class="box">
-                <div class="panel">
-                    <div class="panel-heading">Se connecter</div>
-                    <div class="panel-block">
-                        <form class="" action="{{ path('login_check') }}" method="post">
-                            <p class="control">
-                                <label for="_username">Entrer votre identifiant:</label>
-                                <input type="text" id="_username" name="_username" value="{{ last_username }}" required
-                                       autofocus>
-                            </p>
-                            <p class="control">
-                                <label for="_password">Entrer votre mot de passe:</label>
-                                <input type="password" id="_password" name="_password" required>
-                            </p>
-                            <p class="control">
-                                <button type="submit" class="button is-primary">Se connecter</button>
-                            </p>
-                        </form>
-                    </div>
+            <div class="panel">
+                <div class="panel-heading">Se connecter</div>
+                <div class="panel-block">
+                    <form class="" action="{{ path('login_check') }}" method="post">
+                        <p class="control">
+                            <label for="_username">Entrer votre identifiant:</label>
+                            <input type="text" id="_username" name="_username" value="{{ last_username }}" required
+                                   autofocus>
+                        </p>
+                        <p class="control">
+                            <label for="_password">Entrer votre mot de passe:</label>
+                            <input type="password" id="_password" name="_password" required>
+                        </p>
+                        <p class="control">
+                            <button type="submit" class="button is-primary">Se connecter</button>
+                        </p>
+                    </form>
                 </div>
             </div>
         </div>
