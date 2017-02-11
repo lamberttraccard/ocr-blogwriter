@@ -1,0 +1,32 @@
+.dropcap {
+  float: left;
+  font-size: 3.6rem;
+  line-height: 3.6rem;
+  margin: 2px 10px 0 0;
+}
+
+@for $i from 1 through 6 {
+  .has-mt-#{$i} {
+    margin-top: #{$i}rem !important;
+  }
+}
+
+@for $i from 1 through 6 {
+  .has-mb-#{$i} {
+    margin-bottom: #{$i}rem !important;
+  }
+}
+
+@for $i from 1 through 6 {
+  .has-mtb-#{$i} {
+    margin-top: #{$i}rem !important;
+    margin-bottom: #{$i}rem !important;
+  }
+}
+
+@for $i from 1 through 6 {
+  .has-ptb-#{$i} {
+    padding-top: #{$i}rem !important;
+    padding-bottom: #{$i}rem !important;
+  }
+}

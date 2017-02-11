@@ -1,0 +1,28 @@
+{% extends 'layout.html.twig' %}
+{% block siteTitle %}{{ title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+{% block subtitle %}{% endblock %}
+
+{% block content %}
+    <section class="section is-medium">
+        <div class="container">
+            <div class="panel">
+                {{ form_start(commentForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                <p class="control">
+                    {{ form_label(commentForm.content, null, { 'label_attr':  {
+                        'class': ''
+                    }}) }}
+                    {{ form_errors(commentForm.content) }}
+                    {{ form_widget(commentForm.content, { 'attr':  {
+                        'class': '',
+                        'rows': '4'
+                    }}) }}
+                </p>
+                <p class="control">
+                    <button class="button is-primary is-medium pull-right">Valider</button>
+                </p>
+                {{ form_end(commentForm) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

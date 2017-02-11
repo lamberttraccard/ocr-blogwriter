@@ -1,0 +1,46 @@
+{% extends 'layout.html.twig' %}
+
+{% block siteTitle %}{{ title }}{% endblock %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <section class="section is-medium">
+        <div class="container">
+            <div class="panel">
+                {{ form_start(episodeForm, { 'attr': {'class': 'form-horizontal'} }) }}
+                <p class="control">
+                    {{ form_label(episodeForm.title, null, { 'label_attr':  {
+                        'class': ''
+                    }}) }}
+                    {{ form_errors(episodeForm.title) }}
+                    {{ form_widget(episodeForm.title, { 'attr':  {
+                        'class': ''
+                    }}) }}
+                </p>
+                <p class="control">
+                    {{ form_label(episodeForm.subtitle, null, { 'label_attr':  {
+                        'class': ''
+                    }}) }}
+                    {{ form_errors(episodeForm.subtitle) }}
+                    {{ form_widget(episodeForm.subtitle, { 'attr':  {
+                        'class': ''
+                    }}) }}
+                </p>
+                <p class="control">
+                    {{ form_label(episodeForm.content, null, { 'label_attr':  {
+                        'class': ''
+                    }}) }}
+                    {{ form_errors(episodeForm.content) }}
+                    {{ form_widget(episodeForm.content, { 'attr':  {
+                        'class': '',
+                        'rows': '8'
+                    }}) }}
+                </p>
+                <p class="control">
+                    <button class="button is-primary is-medium pull-right">Valider</button>
+                </p>
+                {{ form_end(episodeForm) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}

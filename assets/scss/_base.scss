@@ -1,0 +1,53 @@
+@import 'variables';
+
+header.hero {
+  //background: url('../images/main-top-bg.jpg');
+
+  .title {
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+}
+
+.the-content {
+  .content {
+    column-count: 2;
+    column-gap: 4em;
+    column-rule: 1px solid $white-ter;
+
+    > p {
+      font-family: $family-serif;
+      text-align: justify;
+
+      &:first-child::first-letter {
+        @extend .dropcap;
+      }
+    }
+  }
+}
+
+.the-nav {
+  background: $turquoise;
+
+  .heading {
+    font-size: 12px;
+  }
+
+  .button {
+    text-align: inherit;
+
+    &:not(:nth-child(2)) {
+      white-space: normal;
+      height: auto;
+    }
+  }
+}
+
+.the-comments {
+  background: $white-bis;
+}
+
+.media + .media {
+  margin-top: 3rem;
+  padding-top: 3rem;
+}

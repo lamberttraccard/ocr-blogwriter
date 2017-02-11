@@ -1,0 +1,24 @@
+{
+  "name": "blogwriter",
+  "version": "1.0.0",
+  "description": "Un billet pour l'Alaska",
+  "main": "index.js",
+  "repository": "git@github.com:lamberttraccard/ocr-blogwriter.git",
+  "author": "Lambert Traccard <lambert.traccard@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bulma": "^0.3.1",
+    "font-awesome": "^4.7.0",
+    "laravel-mix": "^0.7.4",
+    "normalize.css": "^5.0.0"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack --progress --hide-modules",
+    "watch": "cross-env NODE_ENV=development webpack --watch --progress --hide-modules",
+    "hmr": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+    "production": "cross-env NODE_ENV=production webpack --progress --hide-modules"
+  },
+  "devDependencies": {
+    "stylelint-config-standard": "^16.0.0"
+  }
+}

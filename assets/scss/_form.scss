@@ -1,0 +1,26 @@
+@import 'variables';
+
+label {
+  @extend .label;
+}
+
+input {
+  @extend .input;
+}
+
+textarea {
+  @extend .textarea;
+}
+
+select {
+  @extend .select;
+}
+
+input[type=checkbox] {
+  @extend .checkbox;
+}
+
+input[type=radio] {
+  @extend .radio;
+}
+

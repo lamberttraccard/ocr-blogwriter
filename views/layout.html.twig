@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Billet simple pour l'Alaska - {% block siteTitle %}{% endblock %}</title>
+    <meta name="description" content="Billet simple pour l'Alaska par Jean Forteroche"/>
+    <meta name="author" content="Jean Forteroche"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('/css/app.css') }}"/>
+    <script src="{{ asset('/js/modernizr.js') }}"></script>
+</head>
+<body>
+<div class="wrapper">
+    <header class="hero is-primary is-medium">
+        <div class="hero-head">
+            <header class="nav">
+                <div class="container">
+                    <div class="nav-left">
+                        <span class="nav-item">
+                            <a class="button is-primary is-inverted is-outlined">
+                                <span class="icon"><i class="fa fa-bars"></i></span>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="nav-right">
+                        <span class="nav-item">
+                            <a href="{{ path('login') }}" class="button is-primary is-inverted is-outlined">
+                                <span class="icon"><i class="fa fa-user"></i></span>
+                                <span>Se connecter</span>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="hero-body ">
+            <div class="container has-text-centered">
+                <h1 class="title is-1">{% block title %}{% endblock %}</h1>
+                <h2 class="subtitle is-4">{% block subtitle %}{% endblock %}</h2>
+            </div>
+        </div>
+        <div class="hero-foot">
+            {% block heroFoot %}{% endblock %}
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="content has-text-centered">
+                <p>
+                    <strong>Un billet pour l'Alaska</strong> par Jean Forteroche |
+                    Made with <span class="icon"><i class="fa fa-heart"></i></span>
+                    by <a href="http://latr.me">Lambert Traccard</a>
+                </p>
+                <p>
+                    <span class="icon"><i class="fa fa-copyright"></i></span> 2017 Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</div><!-- /wrapper -->
+<script src="{{ asset('/js/app.js') }}"></script>
+</body>
+</html>
