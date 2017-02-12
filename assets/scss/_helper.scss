@@ -9,15 +9,15 @@
   text-transform: capitalize;
 }
 
-@for $i from 1 through 6 {
-  .has-mt-#{$i} {
-    margin-top: #{$i}rem !important;
-  }
+.no-scroll {
+  overflow: hidden;
 }
 
 @for $i from 1 through 6 {
-  .has-mb-#{$i} {
-    margin-bottom: #{$i}rem !important;
+  @each $prop in top, right, bottom, left {
+    .has-m#{str_slice($prop, 0, 1)}-#{$i} {
+      margin-#{$prop}: #{$i}rem !important;
+    }
   }
 }
 

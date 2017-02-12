@@ -1,4 +1,5 @@
 {% extends 'layout.html.twig' %}
+
 {% block siteTitle %}{{ title }}{% endblock %}
 {% block title %}{{ title }}{% endblock %}
 {% block subtitle %}{% endblock %}
@@ -7,20 +8,16 @@
     <section class="section is-medium">
         <div class="container">
             <div class="panel">
-                {{ form_start(commentForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <p class="control">
-                    {{ form_label(commentForm.content, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
+                {{ form_start(commentForm) }}
+                <div class="control">
+                    {{ form_label(commentForm.content, 'Commentaire') }}
                     {{ form_errors(commentForm.content) }}
-                    {{ form_widget(commentForm.content, { 'attr':  {
-                        'class': '',
-                        'rows': '4'
-                    }}) }}
-                </p>
-                <p class="control">
+                    {{ form_widget(commentForm.content) }}
+                </div>
+                <div class="control">
+                    <a href="{{ path('admin') }}" class="button is-danger is-medium">Annuler</a>
                     <button class="button is-primary is-medium pull-right">Valider</button>
-                </p>
+                </div>
                 {{ form_end(commentForm) }}
             </div>
         </div>

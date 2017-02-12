@@ -10,3 +10,21 @@
     flex: none;
   }
 }
+
+.panel-heading {
+  padding: 1rem;
+}
+
+.panel-block {
+  padding: 1rem;
+}
+
+.tabs {
+  justify-content: space-around;
+}
+
+.table td,
+.table th {
+  font-size: 1.15rem;
+  vertical-align: middle;
+}

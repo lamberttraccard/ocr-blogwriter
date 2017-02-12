@@ -1,0 +1,35 @@
+<section>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Auteur</th>
+            <th>Episode</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for comment in comments %}
+            <tr>
+                <td>{{ comment.id }}</td>
+                <td class="is-capitalize">{{ comment.author.username }}</td>
+                <td class="is-capitalize">{{ comment.episode.title }}</td>
+                <td class="has-text-right">
+                    <a href="{{ path('episode', {'id' : comment.episode.id}) }}#comment-{{ comment.id }}"
+                       class="button is-info">
+                        <span class="icon"><i class="fa fa-eye"></i></span>
+                    </a>
+                    <a href="{{ path('admin_comment_edit', {'id': comment.id }) }}"
+                       class="button is-warning">
+                        <span class="icon"><i class="fa fa-edit"></i></span>
+                    </a>
+                    <a href="{{ path('admin_comment_delete', {'id': comment.id }) }}"
+                       class="button is-danger">
+                        <span class="icon"><i class="fa fa-remove"></i></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>

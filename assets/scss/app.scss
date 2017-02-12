@@ -3,8 +3,11 @@
 @import '~font-awesome/scss/font-awesome';
 @import '~normalize.css/normalize';
 @import '~bulma';
+@import '~tinymce/skins/lightgray/content.min';
+@import '~tinymce/skins/lightgray/skin.min';
 @import 'helper';
 @import 'base';
+@import 'menu';
 @import 'components';
 @import 'form';
 @import 'tabs';

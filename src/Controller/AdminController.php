@@ -16,17 +16,13 @@ class AdminController {
     {
         $episodes = $app['dao.episode']->findAll();
         $comments = $app['dao.comment']->findAll();
-//        die(var_dump($comments));
         $users = $app['dao.user']->findAll();
+
         return $app['twig']->render('admin.html.twig', array(
             'episodes' => $episodes,
             'comments' => $comments,
-            'users' => $users));
-    }
-
-    public function accountAction(Application $app)
-    {
-        return $app['twig']->render('account.html.twig', array());
+            'users'    => $users
+        ));
     }
 
     public function addEpisodeAction(Request $request, Application $app)
@@ -34,15 +30,19 @@ class AdminController {
         $episode = new Episode();
         $episodeForm = $app['form.factory']->create(EpisodeType::class, $episode);
         $episodeForm->handleRequest($request);
+
         if ($episodeForm->isSubmitted() && $episodeForm->isValid())
         {
             $app['dao.episode']->save($episode);
-            $app['session']->getFlashBag()->add('success', 'L\'épisode a été créé avec succès.');
+            $app['session']->getFlashBag()->add('success', 'L\'épisode a été ajouté avec succès.');
+
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
 
         return $app['twig']->render('episode_form.html.twig', array(
             'title'       => 'Nouvel épisode',
-            'episodeForm' => $episodeForm->createView()));
+            'episodeForm' => $episodeForm->createView()
+        ));
     }
 
     public function editEpisodeAction($id, Request $request, Application $app)
@@ -50,26 +50,27 @@ class AdminController {
         $episode = $app['dao.episode']->find($id);
         $episodeForm = $app['form.factory']->create(EpisodeType::class, $episode);
         $episodeForm->handleRequest($request);
+
         if ($episodeForm->isSubmitted() && $episodeForm->isValid())
         {
             $app['dao.episode']->save($episode);
             $app['session']->getFlashBag()->add('success', 'L\'épisode a été modifié avec succès.');
+
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
 
         return $app['twig']->render('episode_form.html.twig', array(
-            'title'       => 'Modifier episode',
-            'episodeForm' => $episodeForm->createView()));
+            'title'       => 'Modifier épisode',
+            'episodeForm' => $episodeForm->createView()
+        ));
     }
 
-    public function deleteEpisodeAction($id, Request $request, Application $app)
+    public function deleteEpisodeAction($id, Application $app)
     {
-        // Delete all associated comments
         $app['dao.comment']->deleteAllByEpisode($id);
-        // Delete the episode
         $app['dao.episode']->delete($id);
         $app['session']->getFlashBag()->add('success', 'L\'épisode a été supprimé avec succès.');
 
-        // Redirect to admin home page
         return $app->redirect($app['url_generator']->generate('admin'));
     }
 
@@ -78,23 +79,26 @@ class AdminController {
         $comment = $app['dao.comment']->find($id);
         $commentForm = $app['form.factory']->create(CommentType::class, $comment);
         $commentForm->handleRequest($request);
+
         if ($commentForm->isSubmitted() && $commentForm->isValid())
         {
             $app['dao.comment']->save($comment);
             $app['session']->getFlashBag()->add('success', 'Le commentaire a été modifié avec succès.');
+
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
 
         return $app['twig']->render('comment_form.html.twig', array(
             'title'       => 'Modifier commentaire',
-            'commentForm' => $commentForm->createView()));
+            'commentForm' => $commentForm->createView()
+        ));
     }
 
-    public function deleteCommentAction($id, Request $request, Application $app)
+    public function deleteCommentAction($id, Application $app)
     {
         $app['dao.comment']->delete($id);
         $app['session']->getFlashBag()->add('success', 'Le commentaire a été supprimé avec succès.');
 
-        // Redirect to admin home page
         return $app->redirect($app['url_generator']->generate('admin'));
     }
 
@@ -103,24 +107,25 @@ class AdminController {
         $user = new User();
         $userForm = $app['form.factory']->create(UserType::class, $user);
         $userForm->handleRequest($request);
+
         if ($userForm->isSubmitted() && $userForm->isValid())
         {
-            // generate a random salt value
             $salt = substr(md5(time()), 0, 23);
             $user->setSalt($salt);
             $plainPassword = $user->getPassword();
-            // find the default encoder
             $encoder = $app['security.encoder.bcrypt'];
-            // compute the encoded password
             $password = $encoder->encodePassword($plainPassword, $user->getSalt());
             $user->setPassword($password);
             $app['dao.user']->save($user);
-            $app['session']->getFlashBag()->add('success', 'The user was successfully created.');
+            $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été ajouté avec succès.');
+
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
 
         return $app['twig']->render('user_form.html.twig', array(
-            'title'    => 'New user',
-            'userForm' => $userForm->createView()));
+            'title'    => 'Nouvel utilisateur',
+            'userForm' => $userForm->createView(),
+        ));
     }
 
     public function editUserAction($id, Request $request, Application $app)
@@ -128,32 +133,31 @@ class AdminController {
         $user = $app['dao.user']->find($id);
         $userForm = $app['form.factory']->create(UserType::class, $user);
         $userForm->handleRequest($request);
+
         if ($userForm->isSubmitted() && $userForm->isValid())
         {
             $plainPassword = $user->getPassword();
-            // find the encoder for the user
             $encoder = $app['security.encoder_factory']->getEncoder($user);
-            // compute the encoded password
             $password = $encoder->encodePassword($plainPassword, $user->getSalt());
             $user->setPassword($password);
             $app['dao.user']->save($user);
-            $app['session']->getFlashBag()->add('success', 'The user was successfully updated.');
+            $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été modifié avec succès.');
+
+            return $app->redirect($app['url_generator']->generate('admin'));
         }
 
         return $app['twig']->render('user_form.html.twig', array(
-            'title'    => 'Edit user',
-            'userForm' => $userForm->createView()));
+            'title'    => 'Modifier utilisateur',
+            'userForm' => $userForm->createView()
+        ));
     }
 
-    public function removeUserAction($id, Request $request, Application $app)
+    public function removeUserAction($id, Application $app)
     {
-        // Delete all associated comments
         $app['dao.comment']->deleteAllByUser($id);
-        // Delete the user
         $app['dao.user']->delete($id);
-        $app['session']->getFlashBag()->add('success', 'The user was successfully removed.');
+        $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été supprimé avec succès.');
 
-        // Redirect to admin home page
         return $app->redirect($app['url_generator']->generate('admin'));
     }
 

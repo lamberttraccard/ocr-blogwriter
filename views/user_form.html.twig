@@ -1,5 +1,4 @@
 {% extends 'layout.html.twig' %}
-{% set adminMenu = true %}
 
 {% block siteTitle %}{{ title }}{% endblock %}
 {% block title %}{{ title }}{% endblock %}
@@ -8,45 +7,32 @@
 {% block content %}
     <section class="section is-medium">
         <div class="container">
+
             <div class="panel">
-                {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <p class="control">
-                    {{ form_label(userForm.username, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
+                {{ form_start(userForm) }}
+                <div class="control">
+                    {{ form_label(userForm.username, 'Username') }}
                     {{ form_errors(userForm.username) }}
-                    {{ form_widget(userForm.username, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
-                    {{ form_label(userForm.password.first, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
-                    {{ form_widget(userForm.password.first, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
-                    {{ form_label(userForm.password.second, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
-                    {{ form_widget(userForm.password.second, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
-                    {{ form_label(userForm.role, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
+                    {{ form_widget(userForm.username) }}
+                </div>
+                <div class="control">
+                    {{ form_label(userForm.password.first, 'Mot de passe') }}
+                    {{ form_errors(userForm.password.first) }}
+                    {{ form_widget(userForm.password.first) }}
+                </div>
+                <div class="control">
+                    {{ form_label(userForm.password.second, 'Confirmer mot de passe') }}
+                    {{ form_widget(userForm.password.second) }}
+                </div>
+                <div class="control">
+                    {{ form_label(userForm.role, 'Role') }}
                     {{ form_errors(userForm.role) }}
-                    {{ form_widget(userForm.role, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
+                    {{ form_widget(userForm.role) }}
+                </div>
+                <div class="control">
+                    <a href="{{ path('admin') }}" class="button is-danger is-medium">Annuler</a>
                     <button class="button is-primary is-medium pull-right">Valider</button>
-                </p>
+                </div>
                 {{ form_end(userForm) }}
             </div>
         </div>

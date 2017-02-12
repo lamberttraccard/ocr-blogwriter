@@ -1,0 +1,62 @@
+<h3 class="title is-3 has-mb-3">
+    {% if comments|length == 0 %}
+        Commentaire
+    {% elseif comments|length == 1 %}
+        1 commentaire
+    {% else %}
+        {{ comments|length }} commentaires
+    {% endif %}
+</h3>
+
+{% if comments|length == 0 %}
+    <p class="subtitle">Il n'y a pas encore de commentaire pour cet épisode.</p>
+{% endif %}
+
+{% for comment in comments %}
+    <article id="comment-{{ comment.id }}" class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img src="http://bulma.io/images/placeholders/128x128.png">
+            </p>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <p>
+                    <strong>{{ comment.author.username }}</strong>
+                    <small>il y a 30min</small>
+                    <br>
+                    {{ comment.content }}
+                    <br>
+                </p>
+            </div>
+        </div>
+    </article>
+{% endfor %}
+
+<h3 class="title is-3 has-mt-6">Laisse un commentaire</h3>
+{% if commentForm %}
+    {{ form_start(commentForm) }}
+    <article class="media">
+        <figure class="media-left">
+            <p class="image is-64x64">
+                <img src="http://bulma.io/images/placeholders/128x128.png">
+            </p>
+        </figure>
+        <div class="media-content">
+            <p class="control">
+                {{ form_errors(commentForm.content) }}
+                {{ form_widget(commentForm.content, { 'attr':  {
+                    'rows': '4',
+                    'class': '',
+                    'placeholder': 'Votre commentaire...'
+                }}) }}
+            </p>
+            <p class="control">
+                <button class="button is-primary is-medium pull-right">Envoyer</button>
+            </p>
+        </div>
+    </article>
+    {{ form_end(commentForm) }}
+{% else %}
+    <a href="{{ path('login') }} ">Se connecter</a> pour publier un commentaire.
+{% endif %}

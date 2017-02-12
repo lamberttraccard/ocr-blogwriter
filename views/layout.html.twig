@@ -11,14 +11,17 @@
     <script src="{{ asset('/js/modernizr.js') }}"></script>
 </head>
 <body>
+
+{{ render(controller('\\BlogWriter\\Controller\\DefaultController::menuAction')) }}
+
 <div class="wrapper">
-    <header class="hero is-primary is-medium">
+    <header id="header" class="hero is-primary is-medium">
         <div class="hero-head">
             <header class="nav">
                 <div class="container">
                     <div class="nav-left">
                         <span class="nav-item">
-                            <a class="button is-primary is-inverted is-outlined">
+                            <a id="menuBtn" class="button is-primary is-inverted is-outlined">
                                 <span class="icon"><i class="fa fa-bars"></i></span>
                             </a>
                         </span>
@@ -62,7 +65,7 @@
             {% block heroFoot %}{% endblock %}
         </div>
     </header>
-    <main>
+    <main id="main">
         {% for flashMessage in app.session.flashbag.get('success') %}
             <div class="container has-mt-2">
                 <div class="notification is-success">
@@ -71,9 +74,17 @@
                 </div>
             </div>
         {% endfor %}
+        {% if errors is defined and errors %}
+            <div class="container has-mt-2">
+                <div class="notification is-danger">
+                    {{ errors }}
+                    <button class="delete"></button>
+                </div>
+            </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
-    <footer class="footer">
+    <footer id="footer" class="footer">
         <div class="container">
             <div class="content has-text-centered">
                 <p>

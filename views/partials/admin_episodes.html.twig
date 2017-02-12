@@ -1,0 +1,35 @@
+<section>
+    <a href="{{ path('admin_episode_add') }}" class="button is-primary is-pulled-right is-medium has-mb-2">
+        <span>Ajouter un episode</span><span class="icon"><i class="fa fa-plus-circle"></i></span>
+    </a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Titre</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for episode in episodes %}
+            <tr>
+                <td>{{ episode.id }}</td>
+                <td class="is-capitalize">{{ episode.title }}</td>
+                <td class="has-text-right">
+                    <a href="{{ path('episode', {'id': episode.id }) }}" class="button is-info">
+                        <span class="icon"><i class="fa fa-eye"></i></span>
+                    </a>
+                    <a href="{{ path('admin_episode_edit', {'id': episode.id }) }}"
+                       class="button is-warning">
+                        <span class="icon"><i class="fa fa-edit"></i></span>
+                    </a>
+                    <a href="{{ path('admin_episode_delete', {'id': episode.id }) }}"
+                       class="button is-danger">
+                        <span class="icon"><i class="fa fa-remove"></i></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
