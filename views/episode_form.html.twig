@@ -22,7 +22,7 @@
                 <div class="control">
                     {{ form_label(episodeForm.content, 'Contenu') }}
                     {{ form_errors(episodeForm.content) }}
-                    {{ form_widget(episodeForm.content, {'attr': {'class': 'tinymce'}}) }}
+                    {{ form_widget(episodeForm.content) }}
                 </div>
                 <div class="control">
                     <a href="{{ path('admin') }}" class="button is-danger is-medium">Annuler</a>

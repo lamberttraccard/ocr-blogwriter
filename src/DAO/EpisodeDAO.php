@@ -55,7 +55,7 @@ class EpisodeDAO extends DAO {
         $episodeData = array(
             'title' => $episode->getTitle(),
             'subtitle' => $episode->getSubtitle(),
-            'content' => $episode->getContent(),
+            'content' => $episode->getContent()
         );
 
         if ($episode->getId()) {

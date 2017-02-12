@@ -34,6 +34,12 @@ class Episode {
      */
     private $createdAt;
 
+    /**
+     * Episode updated at.
+     * @var string
+     */
+    private $updatedAt;
+
     public function getId()
     {
         return $this->id;
@@ -90,6 +96,18 @@ class Episode {
     public function setCreatedAt($createdAt)
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
