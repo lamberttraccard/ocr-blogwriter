@@ -39,7 +39,6 @@ CREATE TABLE `users` (
 CREATE TABLE `user_episode` (
   `user_id` INTEGER NOT NULL,
   `episode_id` INTEGER NOT NULL,
-  `view` BOOLEAN NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

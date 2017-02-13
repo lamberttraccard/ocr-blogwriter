@@ -21,12 +21,11 @@ class UserDAO extends DAO implements UserProviderInterface {
     public function find($id)
     {
         $sql = "select * from users where id=?";
-        $row = $this->getDb()->fetchAssoc($sql, array($id));
+        $row = $this->getDb()->fetchAssoc($sql, [$id]);
 
-        if ($row)
-            return $this->buildDomainObject($row);
-        else
-            throw new \Exception("No user matching id " . $id);
+        if ($row) return $this->buildDomainObject($row);
+
+        throw new \Exception("No user matching id " . $id);
     }
 
     /**
@@ -34,16 +33,18 @@ class UserDAO extends DAO implements UserProviderInterface {
      *
      * @return array A list of all users.
      */
-    public function findAll() {
+    public function findAll()
+    {
         $sql = "select * from users order by role, username";
         $result = $this->getDb()->fetchAll($sql);
 
-        // Convert query result to an array of domain objects
-        $entities = array();
-        foreach ($result as $row) {
+        $entities = [];
+        foreach ($result as $row)
+        {
             $id = $row['id'];
             $entities[$id] = $this->buildDomainObject($row);
         }
+
         return $entities;
     }
 
@@ -52,21 +53,23 @@ class UserDAO extends DAO implements UserProviderInterface {
      *
      * @param \BlogWriter\Domain\User $user The user to save
      */
-    public function save(User $user) {
+    public function save(User $user)
+    {
         $userData = array(
             'username' => $user->getUsername(),
-            'salt' => $user->getSalt(),
+            'salt'     => $user->getSalt(),
             'password' => $user->getPassword(),
-            'role' => $user->getRole()
+            'role'     => $user->getRole()
         );
 
-        if ($user->getId()) {
+        if ($user->getId())
+        {
             // The user has already been saved : update it
-            $this->getDb()->update('users', $userData, array('id' => $user->getId()));
-        } else {
+            $this->getDb()->update('users', $userData, ['id' => $user->getId()]);
+        } else
+        {
             // The user has never been saved : insert it
             $this->getDb()->insert('users', $userData);
-            // Get the id of the newly created user and set it on the entity.
             $id = $this->getDb()->lastInsertId();
             $user->setId($id);
         }
@@ -75,11 +78,11 @@ class UserDAO extends DAO implements UserProviderInterface {
     /**
      * Removes a user from the database.
      *
-     * @param @param integer $id The user id.
+     * @param integer $id The user id.
      */
-    public function delete($id) {
-        // Delete the user
-        $this->getDb()->delete('users', array('id' => $id));
+    public function delete($id)
+    {
+        $this->getDb()->delete('users', ['id' => $id]);
     }
 
     /**
@@ -88,12 +91,11 @@ class UserDAO extends DAO implements UserProviderInterface {
     public function loadUserByUsername($username)
     {
         $sql = "select * from users where username=?";
-        $row = $this->getDb()->fetchAssoc($sql, array($username));
+        $row = $this->getDb()->fetchAssoc($sql, [$username]);
 
-        if ($row)
-            return $this->buildDomainObject($row);
-        else
-            throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
+        if ($row) return $this->buildDomainObject($row);
+
+        throw new UsernameNotFoundException(sprintf('User "%s" not found.', $username));
     }
 
     /**

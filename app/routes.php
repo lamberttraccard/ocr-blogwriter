@@ -14,6 +14,8 @@ $app->match('/admin/user/add', '\BlogWriter\Controller\AdminController::addUserA
 $app->match('/admin/user/{id}/edit', '\BlogWriter\Controller\AdminController::editUserAction')->bind('admin_user_edit');
 $app->get('/admin/user/{id}/delete', '\BlogWriter\Controller\AdminController::removeUserAction')->bind('admin_user_delete');
 
-$app->get('/account', '\BlogWriter\Controller\AccountController::indexAction')->bind('account');
+$app->match('/account', '\BlogWriter\Controller\AccountController::indexAction')->bind('account');
 
 $app->match('/episode/{id}', '\BlogWriter\Controller\EpisodeController::indexAction')->bind('episode');
+$app->get('/episode/{id}/read', '\BlogWriter\Controller\EpisodeController::readAction')->bind('episode_read');
+$app->get('/episode/{id}/unread', '\BlogWriter\Controller\EpisodeController::unreadAction')->bind('episode_unread');

@@ -10,7 +10,8 @@
     "symfony/translation": "^3.2",
     "symfony/config": "^3.2",
     "symfony/validator": "^3.2",
-    "twig/extensions": "^1.4"
+    "twig/extensions": "^1.4",
+    "jimmiw/php-time-ago": "^0.4.14"
   },
   "autoload": {
     "psr-4": {"BlogWriter\\": "src"}

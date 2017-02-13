@@ -8,10 +8,10 @@
     <div class="container has-text-centered has-mb-2">
         <div class="columns">
             <div class="column">
-                <span class="icon"><i class="fa fa-calendar-o"></i></span> Publié le 8 février 2017
+                <span class="icon"><i class="fa fa-calendar-o"></i></span> Publié {{ episode.createdAtAgo }}
             </div>
             <div class="column">
-                <span class="icon"><i class="fa fa-clock-o"></i></span> 3 min de lecture
+                <span class="icon"><i class="fa fa-clock-o"></i></span> {{ episode.readingTime }} min de lecture
             </div>
         </div>
     </div>
@@ -26,33 +26,9 @@
                 </div>
             </div>
         </section>
-        <section class="hero is-primary the-nav">
-            <div class="hero-body">
-                <nav class="container">
-                    <ul class="columns is-vcentered">
-                        <li class="column has-text-left is-4">
-                            <a class="button is-primary is-medium">
-                                <span class="icon"><i class="fa fa-long-arrow-left"></i></span>
-                                <span>Titre précédent</span>
-                            </a>
-                        </li>
-                        <li class="column has-text-centered is-4">
-                            <p class="heading">Episode</p>
-                            <a class="button is-primary is-inverted is-medium">
-                                <span class="icon"><i class="fa fa-check-circle"></i></span>
-                                <span> Marquer comme lu</span>
-                            </a>
-                        </li>
-                        <li class="column has-text-right is-4">
-                            <a class="button is-primary is-medium">
-                                <span>Titre suivant</span>
-                                <span class="icon"><i class="fa fa-long-arrow-right"></i></span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </section>
+
+        {% include('partials/episodes_nav.html.twig') %}
+
         <section class="section is-medium the-comments">
             <div class="container">
                 {% include 'partials/comments.html.twig' %}

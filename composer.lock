@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "f9f6679e6136fd8ee53182bf2d44e064",
+    "content-hash": "abf664269a7376b8bc9d6d2949b2687a",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -475,6 +475,49 @@
                 "parser"
             ],
             "time": "2014-09-09T13:34:57+00:00"
+        },
+        {
+            "name": "jimmiw/php-time-ago",
+            "version": "0.4.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jimmiw/php-time-ago.git",
+                "reference": "80178cac870260b5297330ba38354af7eae0e342"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jimmiw/php-time-ago/zipball/80178cac870260b5297330ba38354af7eae0e342",
+                "reference": "80178cac870260b5297330ba38354af7eae0e342",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "timeago.inc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jimmi Westerberg",
+                    "homepage": "http://www.westsworld.dk",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Simple module, that displays the date in a \"time ago\" format",
+            "homepage": "https://github.com/jimmiw/php-time-ago",
+            "keywords": [
+                "distance of time",
+                "time ago",
+                "time ago in words"
+            ],
+            "time": "2016-09-22T08:40:33+00:00"
         },
         {
             "name": "paragonie/random_compat",

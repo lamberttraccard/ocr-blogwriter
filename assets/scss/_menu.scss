@@ -21,8 +21,51 @@
   }
 
   & li {
-    padding: 2rem 0;
+    padding: 0;
     border-bottom: 1px solid #191919;
+
+    > a {
+      display: block;
+      padding: 2rem 0;
+
+      &:nth-child(2) {
+        display: none;
+      }
+    }
+
+    &.read {
+      .title,
+      .subtitle {
+        color: #333;
+        text-decoration: line-through;
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+
+      .title,
+      .subtitle {
+        text-decoration: none;
+      }
+
+      .title {
+        color: #fff;
+      }
+
+      .subtitle {
+        color: #666;
+      }
+    }
+  }
+
+  .title,
+  .subtitle {
+    color: #666;
+  }
+
+  .title.is-1 {
+    color: #fff;
   }
 
   .delete {
@@ -32,18 +75,5 @@
     height: 30px;
     width: 30px;
     background: rgba(#fff, .15);
-  }
-
-  & a:hover .title {
-    color: #fff;
-  }
-
-  .title {
-    color: #666;
-    margin-bottom: 0;
-
-    &.is-1 {
-      color: #fff;
-    }
   }
 }

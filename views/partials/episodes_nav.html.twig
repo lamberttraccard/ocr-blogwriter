@@ -1,0 +1,44 @@
+<section class="hero is-primary the-nav">
+    <div class="hero-body">
+        <nav class="container">
+            <ul class="columns is-vcentered">
+                <li class="column has-text-left is-4">
+                    {% if episodePrevious %}
+                        <a href="{{ path('episode', {'id' : episodePrevious.id }) }}"
+                           class="button is-primary is-medium">
+                            <span class="icon"><i class="fa fa-long-arrow-left"></i></span>
+                            <span>{{ episodePrevious.title }}</span>
+                        </a>
+                    {% endif %}
+                </li>
+                <li class="column has-text-centered is-4">
+                    {% if episodesRead[episode.id] is defined %}
+                        {% set route = 'episode_unread' %}
+                        {% set buttonText = 'Marquer comme non lu' %}
+                        {% set buttonIcon = 'fa-eye-slash' %}
+                    {% else %}
+                        {% set route = 'episode_read' %}
+                        {% set buttonText = 'Marquer comme lu' %}
+                        {% set buttonIcon = 'fa-eye' %}
+                    {% endif %}
+
+                    <p class="heading">Episode</p>
+                    <a href="{{ path(route, {'id' : episode.id}) }}"
+                       class="button is-primary is-inverted is-medium">
+                        <span class="icon"><i class="fa {{ buttonIcon }}"></i></span>
+                        <span>{{ buttonText }}</span>
+                    </a>
+                </li>
+                <li class="column has-text-right is-4">
+                    {% if episodeNext %}
+                        <a href="{{ path('episode', {'id' : episodeNext.id }) }}"
+                           class="button is-primary is-medium">
+                            <span>{{ episodeNext.title }}</span>
+                            <span class="icon"><i class="fa fa-long-arrow-right"></i></span>
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>

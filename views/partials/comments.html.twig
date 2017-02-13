@@ -23,7 +23,7 @@
             <div class="content">
                 <p>
                     <strong>{{ comment.author.username }}</strong>
-                    <small>il y a 30min</small>
+                    <small>{{ comment.createdAtAgo }}</small>
                     <br>
                     {{ comment.content }}
                     <br>

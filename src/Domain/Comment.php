@@ -93,5 +93,8 @@ class Comment {
         return $this;
     }
 
-
+    public function getCreatedAtAgo()
+    {
+        return preg_replace('/(depuis) ()/i', 'il y a $2', timeAgoInWords($this->createdAt, 'Europe/Paris', 'fr'));
+    }
 }

@@ -100,6 +100,11 @@ class Episode {
         return $this;
     }
 
+    public function getCreatedAtAgo()
+    {
+        return preg_replace('/(depuis) ()/i', 'il y a $2', timeAgoInWords($this->createdAt, 'Europe/Paris', 'fr'));
+    }
+
     public function getUpdatedAt()
     {
         return $this->updatedAt;
@@ -110,5 +115,13 @@ class Episode {
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    public function getReadingTime()
+    {
+        $wordPerMinute = 300;
+        $nbWords = str_word_count($this->content);
+
+        return ceil($nbWords / $wordPerMinute);
     }
 }

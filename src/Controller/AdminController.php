@@ -28,10 +28,10 @@ class AdminController {
     public function addEpisodeAction(Request $request, Application $app)
     {
         $episode = new Episode();
-        $episodeForm = $app['form.factory']->create(EpisodeType::class, $episode);
-        $episodeForm->handleRequest($request);
+        $form = $app['form.factory']->create(EpisodeType::class, $episode);
+        $form->handleRequest($request);
 
-        if ($episodeForm->isSubmitted() && $episodeForm->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $app['dao.episode']->save($episode);
             $app['session']->getFlashBag()->add('success', 'L\'épisode a été ajouté avec succès.');
@@ -39,19 +39,19 @@ class AdminController {
             return $app->redirect($app['url_generator']->generate('admin'));
         }
 
-        return $app['twig']->render('episode_form.html.twig', array(
+        return $app['twig']->render('episode_form.html.twig', [
             'title'       => 'Nouvel épisode',
-            'episodeForm' => $episodeForm->createView()
-        ));
+            'episodeForm' => $form->createView()
+        ]);
     }
 
     public function editEpisodeAction($id, Request $request, Application $app)
     {
         $episode = $app['dao.episode']->find($id);
-        $episodeForm = $app['form.factory']->create(EpisodeType::class, $episode);
-        $episodeForm->handleRequest($request);
+        $form = $app['form.factory']->create(EpisodeType::class, $episode);
+        $form->handleRequest($request);
 
-        if ($episodeForm->isSubmitted() && $episodeForm->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $app['dao.episode']->save($episode);
             $app['session']->getFlashBag()->add('success', 'L\'épisode a été modifié avec succès.');
@@ -59,10 +59,10 @@ class AdminController {
             return $app->redirect($app['url_generator']->generate('admin'));
         }
 
-        return $app['twig']->render('episode_form.html.twig', array(
+        return $app['twig']->render('episode_form.html.twig', [
             'title'       => 'Modifier épisode',
-            'episodeForm' => $episodeForm->createView()
-        ));
+            'episodeForm' => $form->createView()
+        ]);
     }
 
     public function deleteEpisodeAction($id, Application $app)
@@ -77,10 +77,10 @@ class AdminController {
     public function editCommentAction($id, Request $request, Application $app)
     {
         $comment = $app['dao.comment']->find($id);
-        $commentForm = $app['form.factory']->create(CommentType::class, $comment);
-        $commentForm->handleRequest($request);
+        $form = $app['form.factory']->create(CommentType::class, $comment);
+        $form->handleRequest($request);
 
-        if ($commentForm->isSubmitted() && $commentForm->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $app['dao.comment']->save($comment);
             $app['session']->getFlashBag()->add('success', 'Le commentaire a été modifié avec succès.');
@@ -88,10 +88,10 @@ class AdminController {
             return $app->redirect($app['url_generator']->generate('admin'));
         }
 
-        return $app['twig']->render('comment_form.html.twig', array(
+        return $app['twig']->render('comment_form.html.twig', [
             'title'       => 'Modifier commentaire',
-            'commentForm' => $commentForm->createView()
-        ));
+            'commentForm' => $form->createView()
+        ]);
     }
 
     public function deleteCommentAction($id, Application $app)
@@ -105,10 +105,10 @@ class AdminController {
     public function addUserAction(Request $request, Application $app)
     {
         $user = new User();
-        $userForm = $app['form.factory']->create(UserType::class, $user);
-        $userForm->handleRequest($request);
+        $form = $app['form.factory']->create(UserType::class, $user);
+        $form->handleRequest($request);
 
-        if ($userForm->isSubmitted() && $userForm->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $salt = substr(md5(time()), 0, 23);
             $user->setSalt($salt);
@@ -116,25 +116,26 @@ class AdminController {
             $encoder = $app['security.encoder.bcrypt'];
             $password = $encoder->encodePassword($plainPassword, $user->getSalt());
             $user->setPassword($password);
+            $user->setRole('ROLE_USER');
             $app['dao.user']->save($user);
             $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été ajouté avec succès.');
 
             return $app->redirect($app['url_generator']->generate('admin'));
         }
 
-        return $app['twig']->render('user_form.html.twig', array(
+        return $app['twig']->render('user_form.html.twig', [
             'title'    => 'Nouvel utilisateur',
-            'userForm' => $userForm->createView(),
-        ));
+            'userForm' => $form->createView(),
+        ]);
     }
 
     public function editUserAction($id, Request $request, Application $app)
     {
         $user = $app['dao.user']->find($id);
-        $userForm = $app['form.factory']->create(UserType::class, $user);
-        $userForm->handleRequest($request);
+        $form = $app['form.factory']->create(UserType::class, $user);
+        $form->handleRequest($request);
 
-        if ($userForm->isSubmitted() && $userForm->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $plainPassword = $user->getPassword();
             $encoder = $app['security.encoder_factory']->getEncoder($user);
@@ -146,10 +147,10 @@ class AdminController {
             return $app->redirect($app['url_generator']->generate('admin'));
         }
 
-        return $app['twig']->render('user_form.html.twig', array(
+        return $app['twig']->render('user_form.html.twig', [
             'title'    => 'Modifier utilisateur',
-            'userForm' => $userForm->createView()
-        ));
+            'userForm' => $form->createView()
+        ]);
     }
 
     public function removeUserAction($id, Application $app)

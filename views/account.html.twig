@@ -10,9 +10,23 @@
     </a>
 {% endblock %}
 
+{% block heroFoot %}
+    <nav id="tabs" class="tabs is-boxed is-medium is-fullwidth">
+        <div class="container">
+            <ul>
+                <li><a>Episodes</a></li>
+                <li><a>Details</a></li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
 {% block content %}
     <section class="section is-medium the-content">
-        <div class="container">
+        <div id="tabs-container" class="container">
+
+            {% include('partials/account_episodes.html.twig') %}
+            {% include('partials/account_details.html.twig') %}
 
         </div>
     </section>

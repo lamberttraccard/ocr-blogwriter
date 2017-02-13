@@ -68,3 +68,35 @@ form {
   margin-top: 3rem;
   padding-top: 3rem;
 }
+
+.episodes {
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed $grey-lighter;
+
+    > a:nth-child(1) {
+      padding: 1rem;
+      width: 100%;
+    }
+
+    &.read a:nth-child(1) {
+      opacity: .5;
+
+      .title,
+      .subtitle {
+        text-decoration: line-through;
+      }
+    }
+
+    &:hover a:nth-child(1) {
+      opacity: 1;
+
+      .title,
+      .subtitle {
+        text-decoration: none;
+      }
+    }
+  }
+}

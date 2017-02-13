@@ -12,7 +12,9 @@ class EpisodeController {
     public function indexAction($id, Request $request, Application $app)
     {
         $episode = $app['dao.episode']->find($id);
-        $commentFormView = null;
+        $commentForm = null;
+        $episodeNext = $app['dao.episode']->findNext($id);
+        $episodePrevious = $app['dao.episode']->findPrevious($id);
 
         if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
         {
@@ -20,11 +22,11 @@ class EpisodeController {
             $comment->setEpisode($episode);
             $user = $app['user'];
             $comment->setAuthor($user);
-            $commentForm = $app['form.factory']->create(CommentType::class, $comment);
-            $commentForm->handleRequest($request);
-            $commentFormView = $commentForm->createView();
+            $form = $app['form.factory']->create(CommentType::class, $comment);
+            $form->handleRequest($request);
+            $commentForm = $form->createView();
 
-            if ($commentForm->isSubmitted() && $commentForm->isValid())
+            if ($form->isSubmitted() && $form->isValid())
             {
                 $app['dao.comment']->save($comment);
                 $app['session']->getFlashBag()->add('success', 'Votre commentaire a été ajouté avec succès.');
@@ -33,10 +35,41 @@ class EpisodeController {
 
         $comments = $app['dao.comment']->findAllByEpisode($id);
 
-        return $app['twig']->render('episode.html.twig', array(
-            'episode'     => $episode,
-            'comments'    => $comments,
-            'commentForm' => $commentFormView
+        return $app['twig']->render('episode.html.twig', compact(
+            'episode', 'comments', 'commentForm', 'episodeNext', 'episodePrevious'
         ));
+    }
+
+    public function readAction($id, Application $app, Request $request)
+    {
+        if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
+        {
+            $episode = $app['dao.episode']->find($id);
+            $user = $app['user'];
+            $app['dao.episode']->markAsRead($episode, $user);
+
+            $app['session']->getFlashBag()->add('success', 'L\'épisode a été marqué comme lu.');
+
+            return $app->redirect($request->server->get('HTTP_REFERER'));
+
+        }
+
+        throw new \Exception("You must be logged in to mark an episode as read");
+    }
+
+    public function unreadAction($id, Application $app, Request $request)
+    {
+        if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
+        {
+            $episode = $app['dao.episode']->find($id);
+            $user = $app['user'];
+            $app['dao.episode']->markAsUnread($episode, $user);
+
+            $app['session']->getFlashBag()->add('success', 'L\'épisode a été marqué comme non lu.');
+
+            return $app->redirect($request->server->get('HTTP_REFERER'));
+        }
+
+        throw new \Exception("You must be logged in to mark an episode as unread");
     }
 }

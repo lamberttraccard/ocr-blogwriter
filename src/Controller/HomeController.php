@@ -10,6 +10,6 @@ class HomeController {
     {
         $episodes = $app['dao.episode']->findAll();
 
-        return $app['twig']->render('index.html.twig', array('episodes' => $episodes));
+        return $app['twig']->render('index.html.twig', compact('episodes'));
     }
 }

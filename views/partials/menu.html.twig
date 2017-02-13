@@ -5,15 +5,7 @@
             <span class="icon"><i class="fa fa-home"></i></span>
         </a>
         <h1 class="title is-1 has-mb-4">Sommaire</h1>
-        <ul>
-            {% for episode in episodes %}
-                <li>
-                    <a href="{{ path('episode', {'id' : episode.id }) }}">
-                        <h3 class="title is-3">{{ episode.title }}</h3>
-                    </a>
-                    <p class="subtitle">{{ episode.subtitle }}</p>
-                </li>
-            {% endfor %}
-        </ul>
+
+        {% include('partials/episodes_list.html.twig') %}
     </div>
 </section>

@@ -1,13 +1,6 @@
-{% extends 'layout.html.twig' %}
-
-{% block siteTitle %}{{ title }}{% endblock %}
-{% block title %}{{ title }}{% endblock %}
-{% block subtitle %}{% endblock %}
-
-{% block content %}
-    <section class="section is-medium">
-        <div class="container">
-
+<section>
+    <div class="columns">
+        <div class="column is-half is-offset-one-quarter">
             <div class="panel">
                 {{ form_start(userForm) }}
                 <div class="control">
@@ -25,11 +18,10 @@
                     {{ form_widget(userForm.password.second) }}
                 </div>
                 <div class="control">
-                    <a href="{{ path('admin') }}" class="button is-danger is-medium">Annuler</a>
-                    <button class="button is-primary is-medium pull-right">Valider</button>
+                    <button class="button is-primary is-medium pull-right">Modifier</button>
                 </div>
                 {{ form_end(userForm) }}
             </div>
         </div>
-    </section>
-{% endblock %}
+    </div>
+</section>

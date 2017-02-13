@@ -11,7 +11,8 @@ ExceptionHandler::register();
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../views',
 ));
-$app['twig'] = $app->extend('twig', function(Twig_Environment $twig, $app) {
+
+$app['twig'] = $app->extend('twig', function(Twig_Environment $twig) {
     $twig->addExtension(new Twig_Extensions_Extension_Text());
     return $twig;
 });
@@ -62,3 +63,9 @@ $app['dao.comment'] = function ($app) {
     $commentDAO->setUserDAO($app['dao.user']);
     return $commentDAO;
 };
+
+$app['twig'] = $app->extend('twig', function(Twig_Environment $twig, $app) {
+    $episodesRead = (new BlogWriter\Controller\DefaultController())->getEpisodesReadAction($app);
+    $twig->addGlobal('episodesRead', $episodesRead);
+    return $twig;
+});
