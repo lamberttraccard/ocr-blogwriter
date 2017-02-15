@@ -20,6 +20,11 @@
                     {{ form_widget(episodeForm.subtitle) }}
                 </div>
                 <div class="control">
+                    {{ form_label(episodeForm.style, 'Style') }}
+                    {{ form_errors(episodeForm.style) }}
+                    {{ form_widget(episodeForm.style) }}
+                </div>
+                <div class="control">
                     {{ form_label(episodeForm.content, 'Contenu') }}
                     {{ form_errors(episodeForm.content) }}
                     {{ form_widget(episodeForm.content) }}

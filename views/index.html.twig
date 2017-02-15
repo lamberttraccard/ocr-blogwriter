@@ -6,7 +6,47 @@
 {% block content %}
     <section class="section is-medium the-content">
         <div class="container">
-
+            <div class="content is-medium">
+                <div class="columns">
+                    <div class="column is-4">
+                        <h3 class="title is-h3">L'auteur</h3>
+                        <p class="subtitle">Jean Forteroche</p>
+                        <hr>
+                        <div class="image is-96x96 is-pulled-left has-mr-1">
+                            <img src="{{ user.gravatar(192) }}" alt="avatar">
+                        </div>
+                        <p>
+                            Unless we are mistaken, the understanding of taboo also throws light upon the nature and
+                            origin
+                            of conscience. Without stretching ideas we can speak of a taboo conscience and a taboo sense
+                            of guilt after the violation of a taboo. Taboo conscience is probably the oldest form in
+                            which
+                            we meet the phenomenon of conscience.
+                        </p>
+                        <hr>
+                    </div>
+                    <div class="column is-7 is-offset-1">
+                        <h3 class="title is-h3">Préface</h3>
+                        <p class="subtitle">Un billet pour l'Alaska</p>
+                        <hr>
+                        <p class="is-">
+                            Taboo is itself an ambivalent word and by way of supplement we may add that the established
+                            meaning of this word might of itself have allowed us to guess what we have found as the
+                            result
+                            of extensive investigation, namely, that the taboo prohibition is to be explained as the
+                            result
+                            of an emotional ambivalence. A study of the oldest languages has taught us that at one time
+                            there were many such words which included their own contrasts so that they were in a certain
+                            sense ambivalent, though perhaps not exactly in the same sense as the word taboo. Slight
+                            vocal modifications of this primitive word containing two opposite meanings later served to
+                            create a separate linguistic expression for the two opposites originally united in one word.
+                        </p>
+                        <hr>
+                        <a href="{{ path('episode', {'id' : 1}) }}" class="button is-primary is-medium has-mt-2">Commencer
+                            la lecture</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 {% endblock %}

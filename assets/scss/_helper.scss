@@ -22,6 +22,14 @@
 }
 
 @for $i from 1 through 6 {
+  @each $prop in top, right, bottom, left {
+    .has-p#{str_slice($prop, 0, 1)}-#{$i} {
+      padding-#{$prop}: #{$i}rem !important;
+    }
+  }
+}
+
+@for $i from 1 through 6 {
   .has-mtb-#{$i} {
     margin-top: #{$i}rem !important;
     margin-bottom: #{$i}rem !important;
@@ -32,5 +40,11 @@
   .has-ptb-#{$i} {
     padding-top: #{$i}rem !important;
     padding-bottom: #{$i}rem !important;
+  }
+}
+
+@for $i from 1 through 6 {
+  .has-p-#{$i} {
+    padding: #{$i}rem !important;
   }
 }

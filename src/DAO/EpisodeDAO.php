@@ -25,6 +25,28 @@ class EpisodeDAO extends DAO {
     }
 
     /**
+     * @inheritdoc
+     */
+    public function findOneBy(array $array)
+    {
+        $sql = "select * from episodes where $array[0]=?";
+        $row = $this->getDb()->fetchAssoc($sql, [$array[1]]);
+
+        if ($row) return $this->buildDomainObject($row);
+
+        return false;
+    }
+
+    /**
+     * Get total episodes
+     * @return int
+     */
+    public function getTotal()
+    {
+        return $this->getDb()->query("select id from episodes")->rowCount();
+    }
+
+    /**
      * Return a list of all episodes, sorted by date (oldest first).
      *
      * @return array A list of all episodes.
@@ -83,7 +105,8 @@ class EpisodeDAO extends DAO {
         $episodeData = [
             'title'    => $episode->getTitle(),
             'subtitle' => $episode->getSubtitle(),
-            'content'  => $episode->getContent()
+            'content'  => $episode->getContent(),
+            'style' => $episode->getStyle()
         ];
 
         if ($episode->getId())
@@ -173,6 +196,7 @@ class EpisodeDAO extends DAO {
         $episode->setTitle($row['title']);
         $episode->setSubtitle($row['subtitle']);
         $episode->setContent($row['content']);
+        $episode->setStyle($row['style']);
         $episode->setCreatedAt($row['created_at']);
 
         return $episode;

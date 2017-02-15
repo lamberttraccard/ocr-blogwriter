@@ -17,10 +17,7 @@ class DefaultController {
     {
         $episodesRead = [];
 
-        if ($app['security.authorization_checker']->isGranted('IS_AUTHENTICATED_FULLY'))
-        {
-            $episodesRead = $app['dao.episode']->findRead($app['user']);
-        }
+        if ($app['user']) $episodesRead = $app['dao.episode']->findRead($app['user']);
 
         return $episodesRead;
     }

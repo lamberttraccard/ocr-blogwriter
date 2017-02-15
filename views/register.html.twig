@@ -1,7 +1,7 @@
-{% extends 'layout.html.twig' %}
+{% extends "layout.html.twig" %}
 
-{% block siteTitle %}{{ title }}{% endblock %}
-{% block title %}{{ title }}{% endblock %}
+{% block siteTitle %}S'enregistrer{% endblock %}
+{% block title %}S'enregistrer{% endblock %}
 {% block subtitle %}{% endblock %}
 
 {% block content %}
@@ -32,8 +32,7 @@
                             {{ form_widget(userForm.password.second) }}
                         </div>
                         <div class="control">
-                            <a href="{{ path('admin') }}" class="button is-danger is-medium">Annuler</a>
-                            <button class="button is-primary is-medium pull-right">Valider</button>
+                            <button class="button is-primary is-medium pull-right">S'enregistrer</button>
                         </div>
                         {{ form_end(userForm) }}
                     </div>

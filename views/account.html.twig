@@ -1,8 +1,15 @@
 {% extends 'layout.html.twig' %}
 
+{% block beforeTitle %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="image is-64x64 is-inline-block has-mb-1">
+            <img src="{{ app.user.gravatar }}" alt="avatar">
+        </div>
+    {% endif %}
+{% endblock %}
 {% block siteTitle %}Mon compte{% endblock %}
 {% block title %}Mon compte{% endblock %}
-{% block subtitle %}<span class="is-capitalize">{{ app.user.username }}</span>{% endblock %}
+{% block subtitle %}{% endblock %}
 
 {% block heroBodyExtra %}
     <a href="{{ path('logout') }}" class="button is-primary is-outlined is-inverted has-mt-1">

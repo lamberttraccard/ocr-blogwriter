@@ -22,17 +22,19 @@ form {
 
 .title {
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 700 !important;
   letter-spacing: -2px;
 }
 
 .the-content {
   .content {
-    column-count: 2;
-    column-gap: 4em;
-    column-rule: 1px solid $white-ter;
+    &.is-column-style {
+      column-count: 2;
+      column-gap: 4em;
+      column-rule: 1px solid $white-ter;
+    }
 
-    > p {
+    p {
       font-family: $family-serif;
       text-align: justify;
 
@@ -67,6 +69,14 @@ form {
 .media + .media {
   margin-top: 3rem;
   padding-top: 3rem;
+}
+
+.image.is-inline-block {
+  display: inline-block;
+}
+
+.image img {
+  border-radius: $radius;
 }
 
 .episodes {

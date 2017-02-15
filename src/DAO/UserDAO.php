@@ -29,6 +29,19 @@ class UserDAO extends DAO implements UserProviderInterface {
     }
 
     /**
+     * @inheritdoc
+     */
+    public function findOneBy(array $array)
+    {
+        $sql = "select * from users where $array[0]=?";
+        $row = $this->getDb()->fetchAssoc($sql, [$array[1]]);
+
+        if ($row) return $this->buildDomainObject($row);
+
+        return false;
+    }
+
+    /**
      * Returns a list of all users, sorted by role and name.
      *
      * @return array A list of all users.
@@ -57,6 +70,7 @@ class UserDAO extends DAO implements UserProviderInterface {
     {
         $userData = array(
             'username' => $user->getUsername(),
+            'email' => $user->getEmail(),
             'salt'     => $user->getSalt(),
             'password' => $user->getPassword(),
             'role'     => $user->getRole()
@@ -131,6 +145,7 @@ class UserDAO extends DAO implements UserProviderInterface {
         $user = new User();
         $user->setId($row['id']);
         $user->setUsername($row['username']);
+        $user->setEmail($row['email']);
         $user->setPassword($row['password']);
         $user->setSalt($row['salt']);
         $user->setRole($row['role']);

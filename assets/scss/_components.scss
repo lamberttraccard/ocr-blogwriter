@@ -3,6 +3,15 @@
   justify-content: space-between;
   align-items: center;
 
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
   .delete {
     position: relative;
     top: auto;

@@ -50,6 +50,16 @@ class CommentDAO extends DAO {
         throw new \Exception("No comment matching id " . $id);
     }
 
+    public function findOneBy(array $array)
+    {
+        $sql = "select * from comments where $array[0]=?";
+        $row = $this->getDb()->fetchAssoc($sql, [$array[1]]);
+
+        if ($row) return $this->buildDomainObject($row);
+
+        return false;
+    }
+
     /**
      * Returns a list of all comments, sorted by date (most recent first).
      *

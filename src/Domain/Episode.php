@@ -2,6 +2,10 @@
 
 namespace BlogWriter\Domain;
 
+use BlogWriter\Constraint\Unique;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+
 class Episode {
 
     /**
@@ -29,10 +33,32 @@ class Episode {
     private $content;
 
     /**
+     * Episode style.
+     * @var string
+     */
+    private $style;
+
+    /**
      * Episode created at.
      * @var string
      */
     private $createdAt;
+
+    static public function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('title', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('title', new Assert\Length(array('min' => 4, 'max' => 150)));
+        $metadata->addPropertyConstraint('subtitle', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('subtitle', new Assert\Length(array('min' => 4, 'max' => 150)));
+        /*$metadata->addPropertyConstraint('title', new Unique(array(
+            'field' => 'title',
+            'entity' => 'episode'
+        )));
+        $metadata->addPropertyConstraint('subtitle', new Unique(array(
+            'field' => 'subtitle',
+            'entity' => 'episode'
+        )));*/
+    }
 
     /**
      * Episode updated at.
@@ -84,6 +110,18 @@ class Episode {
     public function setContent($content)
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    public function setStyle($style)
+    {
+        $this->style = $style;
 
         return $this;
     }

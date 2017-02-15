@@ -6,7 +6,9 @@
         <thead>
         <tr>
             <th>#</th>
+            <th>Avatar</th>
             <th>Username</th>
+            <th class="is-hidden-mobile">Email</th>
             <th>Role</th>
             <th></th>
         </tr>
@@ -15,7 +17,9 @@
         {% for user in users %}
             <tr>
                 <td>{{ user.id }}</td>
+                <td><span class="image is-48x48"><img src="{{ user.gravatar }}" alt="avatar"></span></td>
                 <td class="is-capitalize">{{ user.username }}</td>
+                <td class="is-hidden-mobile">{{ user.email }}</td>
                 <td class="is-capitalize">{{ user.formatedRole }}</td>
                 <td class="has-text-right">
                     <a href="{{ path('admin_user_edit', {'id': user.id }) }}"

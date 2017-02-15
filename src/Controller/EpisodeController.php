@@ -54,7 +54,10 @@ class EpisodeController {
 
         }
 
-        throw new \Exception("You must be logged in to mark an episode as read");
+        $link = '<a href="' . $app['url_generator']->generate('login') . '">être connecté</a>';
+        $app['session']->getFlashBag()->add('warning', 'Vous devez ' . $link . ' pour marquer les episodes comme lu.');
+
+        return $app->redirect($request->server->get('HTTP_REFERER'));
     }
 
     public function unreadAction($id, Application $app, Request $request)
@@ -70,6 +73,9 @@ class EpisodeController {
             return $app->redirect($request->server->get('HTTP_REFERER'));
         }
 
-        throw new \Exception("You must be logged in to mark an episode as unread");
+        $link = '<a href="' . $app['url_generator']->generate('login') . '">être connecté</a>';
+        $app['session']->getFlashBag()->add('warning', 'Vous devez ' . $link . ' pour marquer les episodes comme non lu.');
+
+        return $app->redirect($request->server->get('HTTP_REFERER'));
     }
 }

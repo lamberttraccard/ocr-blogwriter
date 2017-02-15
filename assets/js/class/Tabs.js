@@ -1,6 +1,8 @@
 const defaults = {
-    tabsSelector: '#tabs ul > li',
-    itemsSelector: '#tabs-container > section',
+    tabsContainer: '#tabs',
+    itemsContainer: '#tabs-container',
+    tabsSelector: 'ul > li',
+    itemsSelector: 'section',
     tabActiveClass: 'is-active',
     itemActiveClass: 'is-active',
     start: 0
@@ -19,14 +21,17 @@ export default class Tabs {
 
     constructor(options) {
         this.options = Tabs.extend(defaults, options);
+        this.tabsContainer = document.querySelector(this.options.tabsContainer);
+        this.itemsContainer = document.querySelector(this.options.itemsContainer);
         this.init();
     }
 
     init() {
+        this.itemsContainer.classList.add('is-active');
         // tabs elements
-        this.tabs = document.querySelectorAll(this.options.tabsSelector);
+        this.tabs = this.tabsContainer.querySelectorAll(this.options.tabsSelector);
         // content items
-        this.items = document.querySelectorAll(this.options.itemsSelector);
+        this.items = this.itemsContainer.querySelectorAll(this.options.itemsSelector);
         // current index
         this.current = -1;
         // show current content item

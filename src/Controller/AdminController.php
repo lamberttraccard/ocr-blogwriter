@@ -12,17 +12,26 @@ use BlogWriter\Form\Type\UserType;
 
 class AdminController {
 
-    public function indexAction(Application $app)
+
+    public function indexEpisodesAction(Application $app)
     {
         $episodes = $app['dao.episode']->findAll();
+
+        return $app['twig']->render('admin.html.twig', compact('episodes'));
+    }
+
+    public function indexCommentsAction(Application $app)
+    {
         $comments = $app['dao.comment']->findAll();
+
+        return $app['twig']->render('admin.html.twig', compact('comments'));
+    }
+
+    public function indexUsersAction(Application $app)
+    {
         $users = $app['dao.user']->findAll();
 
-        return $app['twig']->render('admin.html.twig', array(
-            'episodes' => $episodes,
-            'comments' => $comments,
-            'users'    => $users
-        ));
+        return $app['twig']->render('admin.html.twig', compact('users'));
     }
 
     public function addEpisodeAction(Request $request, Application $app)
@@ -36,7 +45,7 @@ class AdminController {
             $app['dao.episode']->save($episode);
             $app['session']->getFlashBag()->add('success', 'L\'épisode a été ajouté avec succès.');
 
-            return $app->redirect($app['url_generator']->generate('admin'));
+            return $app->redirect($app['url_generator']->generate('admin_episode_index'));
         }
 
         return $app['twig']->render('episode_form.html.twig', [
@@ -56,7 +65,7 @@ class AdminController {
             $app['dao.episode']->save($episode);
             $app['session']->getFlashBag()->add('success', 'L\'épisode a été modifié avec succès.');
 
-            return $app->redirect($app['url_generator']->generate('admin'));
+            return $app->redirect($app['url_generator']->generate('admin_episode_index'));
         }
 
         return $app['twig']->render('episode_form.html.twig', [
@@ -71,7 +80,7 @@ class AdminController {
         $app['dao.episode']->delete($id);
         $app['session']->getFlashBag()->add('success', 'L\'épisode a été supprimé avec succès.');
 
-        return $app->redirect($app['url_generator']->generate('admin'));
+        return $app->redirect($app['url_generator']->generate('admin_episode_index'));
     }
 
     public function editCommentAction($id, Request $request, Application $app)
@@ -85,7 +94,7 @@ class AdminController {
             $app['dao.comment']->save($comment);
             $app['session']->getFlashBag()->add('success', 'Le commentaire a été modifié avec succès.');
 
-            return $app->redirect($app['url_generator']->generate('admin'));
+            return $app->redirect($app['url_generator']->generate('admin_comment_index'));
         }
 
         return $app['twig']->render('comment_form.html.twig', [
@@ -99,7 +108,7 @@ class AdminController {
         $app['dao.comment']->delete($id);
         $app['session']->getFlashBag()->add('success', 'Le commentaire a été supprimé avec succès.');
 
-        return $app->redirect($app['url_generator']->generate('admin'));
+        return $app->redirect($app['url_generator']->generate('admin_comment_index'));
     }
 
     public function addUserAction(Request $request, Application $app)
@@ -120,7 +129,7 @@ class AdminController {
             $app['dao.user']->save($user);
             $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été ajouté avec succès.');
 
-            return $app->redirect($app['url_generator']->generate('admin'));
+            return $app->redirect($app['url_generator']->generate('admin_user_index'));
         }
 
         return $app['twig']->render('user_form.html.twig', [
@@ -144,7 +153,7 @@ class AdminController {
             $app['dao.user']->save($user);
             $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été modifié avec succès.');
 
-            return $app->redirect($app['url_generator']->generate('admin'));
+            return $app->redirect($app['url_generator']->generate('admin_user_index'));
         }
 
         return $app['twig']->render('user_form.html.twig', [
@@ -159,7 +168,7 @@ class AdminController {
         $app['dao.user']->delete($id);
         $app['session']->getFlashBag()->add('success', 'L\'utilisateur a été supprimé avec succès.');
 
-        return $app->redirect($app['url_generator']->generate('admin'));
+        return $app->redirect($app['url_generator']->generate('admin_user_index'));
     }
 
 }

@@ -32,6 +32,14 @@ abstract class DAO
     }
 
     /**
+     * Find a record from a key => value pair
+     *
+     * @param array $array
+     * @return mixed
+     */
+    abstract public function findOneBy(array $array);
+
+    /**
      * Builds a domain object from a DB row.
      *
      * @param array

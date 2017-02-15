@@ -16,7 +16,7 @@
     <article id="comment-{{ comment.id }}" class="media">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="http://bulma.io/images/placeholders/128x128.png">
+                <img src="{{ comment.author.gravatar }}" alt="avatar">
             </p>
         </figure>
         <div class="media-content">
@@ -39,7 +39,7 @@
     <article class="media">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="http://bulma.io/images/placeholders/128x128.png">
+                <img src="{{ app.user.gravatar }}" alt="avatar">
             </p>
         </figure>
         <div class="media-content">

@@ -21,7 +21,12 @@
     <article>
         <section class="section is-medium the-content">
             <div class="container">
-                <div class="content is-medium">
+                {% if episode.style %}
+                    {% set style = 'is-column-style' %}
+                {% else %}
+                    {% set style = '' %}
+                {% endif %}
+                <div class="content is-medium {{ style }}">
                     {{ episode.content|raw }}
                 </div>
             </div>

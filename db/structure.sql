@@ -10,6 +10,7 @@ CREATE TABLE `episodes` (
   `title` VARCHAR(100) NOT NULL,
   `subtitle` VARCHAR(100) NOT NULL,
   `content` TEXT,
+  `style` VARCHAR(100) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -27,7 +28,8 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `users` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(50) NOT NULL,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `email` VARCHAR(80) NOT NULL UNIQUE,
   `password` VARCHAR(88) NOT NULL,
   `salt` VARCHAR(23) NOT NULL,
   `role` VARCHAR(50) NOT NULL,

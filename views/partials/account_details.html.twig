@@ -9,6 +9,11 @@
                     {{ form_widget(userForm.username) }}
                 </div>
                 <div class="control">
+                    {{ form_label(userForm.email, 'Email') }}
+                    {{ form_errors(userForm.email) }}
+                    {{ form_widget(userForm.email) }}
+                </div>
+                <div class="control">
                     {{ form_label(userForm.password.first, 'Mot de passe') }}
                     {{ form_errors(userForm.password.first) }}
                     {{ form_widget(userForm.password.first) }}
