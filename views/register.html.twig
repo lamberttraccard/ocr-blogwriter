@@ -5,7 +5,7 @@
 {% block subtitle %}{% endblock %}
 
 {% block content %}
-    <section class="section is-medium">
+    <section class="section register is-medium">
         <div class="container">
             <div class="columns">
                 <div class="column is-half is-offset-one-quarter">
@@ -13,9 +13,14 @@
                     <div class="panel">
                         {{ form_start(userForm) }}
                         <div class="control">
-                            {{ form_label(userForm.username, 'Username') }}
+                            {{ form_label(userForm.username, 'Pseudo') }}
                             {{ form_errors(userForm.username) }}
                             {{ form_widget(userForm.username) }}
+                        </div>
+                        <div class="control">
+                            {{ form_label(userForm.displayName, 'Nom d\'affichage') }}
+                            {{ form_errors(userForm.displayName) }}
+                            {{ form_widget(userForm.displayName) }}
                         </div>
                         <div class="control">
                             {{ form_label(userForm.email, 'Email') }}

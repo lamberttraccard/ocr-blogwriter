@@ -7,6 +7,7 @@
   "author": "Lambert Traccard <lambert.traccard@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.15.3",
     "bulma": "^0.3.1",
     "font-awesome": "^4.7.0",
     "laravel-mix": "^0.7.4",

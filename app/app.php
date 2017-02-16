@@ -8,6 +8,13 @@ use Symfony\Component\HttpFoundation\Request;
 ErrorHandler::register();
 ExceptionHandler::register();
 
+// Register JSON data decoder for JSON requests
+$app->before(function (Request $request) {
+    if (0 === strpos($request->headers->get('Content-Type'), 'application/json')) {
+        $data = json_decode($request->getContent(), true);
+        $request->request->replace(is_array($data) ? $data : array());
+    }
+});
 
 // Register service providers.
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
@@ -59,7 +66,6 @@ $app->register(new Silex\Provider\MonologServiceProvider(), array(
     'monolog.level'   => $app['monolog.level']
 ));
 
-// Register services.
 $app['dao.user'] = function ($app)
 {
     return new BlogWriter\DAO\UserDAO($app['db']);
@@ -77,38 +83,40 @@ $app['dao.comment'] = function ($app)
     return $commentDAO;
 };
 
-$app['twig'] = $app->extend('twig', function(Twig_Environment $twig, $app) {
+$app['twig'] = $app->extend('twig', function (Twig_Environment $twig, $app)
+{
     $episodesRead = (new BlogWriter\Controller\DefaultController())->getEpisodesReadAction($app);
     $twig->addGlobal('episodesRead', $episodesRead);
 
     return $twig;
 });
 
-// Register error handler
 /*$app->error(function (\Exception $e, Request $request, $code) use ($app)
 {
     switch ($code)
     {
         case 403:
-            $message = 'Access denied.';
+            $message = 'Accès refusé.';
             break;
         case 404:
-            $message = 'The requested resource could not be found.';
+            $message = 'La page n\'existe pas.';
             break;
         default:
-            $message = "Something went wrong.";
+            $message = 'Une erreur s\'est produite.';
     }
 
     return $app['twig']->render('error.html.twig', array('message' => $message));
 });*/
 
 
-if (isset($app['validator.validator_factory'])) {
-    $app['validator.unique'] = function ($app) {
+if (isset($app['validator.validator_factory']))
+{
+    $app['validator.unique'] = function ($app)
+    {
         $validator = new \BlogWriter\Constraint\UniqueValidator($app);
+
         return $validator;
     };
-
     $app['validator.validator_service_ids'] =
         isset($app['validator.validator_service_ids']) ? $app['validator.validator_service_ids'] : array();
     $app['validator.validator_service_ids'] = array_merge(

@@ -7,8 +7,8 @@
         <tr>
             <th>#</th>
             <th>Avatar</th>
-            <th>Username</th>
-            <th class="is-hidden-mobile">Email</th>
+            <th>Pseudo</th>
+            <th class="is-hidden-mobile">Nom d'affichage</th>
             <th>Role</th>
             <th></th>
         </tr>
@@ -18,15 +18,15 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td><span class="image is-48x48"><img src="{{ user.gravatar }}" alt="avatar"></span></td>
-                <td class="is-capitalize">{{ user.username }}</td>
-                <td class="is-hidden-mobile">{{ user.email }}</td>
+                <td class="">{{ user.username }}</td>
+                <td class="is-hidden-mobile is-capitalize">{{ user.displayName }}</td>
                 <td class="is-capitalize">{{ user.formatedRole }}</td>
                 <td class="has-text-right">
-                    <a href="{{ path('admin_user_edit', {'id': user.id }) }}"
-                       class="button is-warning">
-                        <span class="icon"><i class="fa fa-edit"></i></span>
+                    <a href="{{ path('admin_user_edit', {'id': user.id }) }}" title="Modifier"
+                       class="button is-primary">
+                        <span class="icon"><i class="fa fa-pencil"></i></span>
                     </a>
-                    <a href="{{ path('admin_user_delete', {'id': user.id }) }}"
+                    <a href="{{ path('admin_user_delete', {'id': user.id }) }}" title="Supprimer"
                        class="button is-danger">
                         <span class="icon"><i class="fa fa-remove"></i></span>
                     </a>

@@ -180,6 +180,7 @@ class EpisodeDAO extends DAO {
      */
     public function delete($id)
     {
+        $this->getDb()->delete('user_episode', ['episode_id' => $id]);
         $this->getDb()->delete('episodes', ['id' => $id]);
     }
 

@@ -15,15 +15,14 @@
                 <td class="is-capitalize">{{ comment.author.username }}</td>
                 <td class="is-capitalize">{{ comment.episode.title }}</td>
                 <td class="has-text-right">
-                    <a href="{{ path('episode', {'id' : comment.episode.id}) }}#comment-{{ comment.id }}"
-                       class="button is-info">
-                        <span class="icon"><i class="fa fa-eye"></i></span>
+                    <a href="{{ path('episode', {'id' : comment.episode.id}) }}#comment-{{ comment.id }}" title="Voir" class="button is-primary">
+                        <span class="icon"><i class="fa fa-arrow-left"></i></span>
                     </a>
-                    <a href="{{ path('admin_comment_edit', {'id': comment.id }) }}"
-                       class="button is-warning">
-                        <span class="icon"><i class="fa fa-edit"></i></span>
+                    <a href="{{ path('admin_comment_edit', {'id': comment.id }) }}" title="Modifier"
+                       class="button is-primary">
+                        <span class="icon"><i class="fa fa-pencil"></i></span>
                     </a>
-                    <a href="{{ path('admin_comment_delete', {'id': comment.id }) }}"
+                    <a href="{{ path('admin_comment_delete', {'id': comment.id }) }}" title="Supprimer"
                        class="button is-danger">
                         <span class="icon"><i class="fa fa-remove"></i></span>
                     </a>

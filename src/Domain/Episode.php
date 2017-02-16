@@ -47,9 +47,11 @@ class Episode {
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('title', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('title', new Assert\Length(array('min' => 4, 'max' => 150)));
+        $metadata->addPropertyConstraint('title', new Assert\Length(array('min' => 4, 'max' => 100)));
         $metadata->addPropertyConstraint('subtitle', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('subtitle', new Assert\Length(array('min' => 4, 'max' => 150)));
+        $metadata->addPropertyConstraint('subtitle', new Assert\Length(array('min' => 4, 'max' => 100)));
+        $metadata->addPropertyConstraint('style', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('style', new Assert\Length(array('max' => 100)));
         /*$metadata->addPropertyConstraint('title', new Unique(array(
             'field' => 'title',
             'entity' => 'episode'

@@ -29,7 +29,7 @@
                     <div class="nav-right">
                         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                             <span class="nav-item is-capitalize">
-                                Bienvenue, {{ app.user.username }}
+                                Bienvenue, {{ app.user.displayName }}
                             </span>
                         {% endif %}
                         <span class="nav-item">

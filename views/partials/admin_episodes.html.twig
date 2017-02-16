@@ -16,14 +16,14 @@
                 <td>{{ episode.id }}</td>
                 <td class="is-capitalize">{{ episode.title }}</td>
                 <td class="has-text-right">
-                    <a href="{{ path('episode', {'id': episode.id }) }}" class="button is-info">
-                        <span class="icon"><i class="fa fa-eye"></i></span>
+                    <a href="{{ path('episode', {'id': episode.id }) }}" title="Voir" class="button is-primary">
+                        <span class="icon"><i class="fa fa-arrow-left"></i></span>
                     </a>
-                    <a href="{{ path('admin_episode_edit', {'id': episode.id }) }}"
-                       class="button is-warning">
-                        <span class="icon"><i class="fa fa-edit"></i></span>
+                    <a href="{{ path('admin_episode_edit', {'id': episode.id }) }}" title="Modifier"
+                       class="button is-primary">
+                        <span class="icon"><i class="fa fa-pencil"></i></span>
                     </a>
-                    <a href="{{ path('admin_episode_delete', {'id': episode.id }) }}"
+                    <a href="{{ path('admin_episode_delete', {'id': episode.id }) }}" title="Supprimer"
                        class="button is-danger">
                         <span class="icon"><i class="fa fa-remove"></i></span>
                     </a>

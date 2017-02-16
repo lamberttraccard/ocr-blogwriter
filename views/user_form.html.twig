@@ -13,9 +13,16 @@
                     <div class="panel">
                         {{ form_start(userForm) }}
                         <div class="control">
-                            {{ form_label(userForm.username, 'Username') }}
+                            {{ form_label(userForm.username, 'Pseudo') }}
                             {{ form_errors(userForm.username) }}
-                            {{ form_widget(userForm.username) }}
+                            {{ form_widget(userForm.username, { 'attr':  {
+                                'class': 'is-disabled'
+                            }}) }}
+                        </div>
+                        <div class="control">
+                            {{ form_label(userForm.displayName, 'Nom d\'affichage') }}
+                            {{ form_errors(userForm.displayName) }}
+                            {{ form_widget(userForm.displayName) }}
                         </div>
                         <div class="control">
                             {{ form_label(userForm.email, 'Email') }}
@@ -33,7 +40,7 @@
                         </div>
                         <div class="control">
                             <a href="{{ path('admin') }}" class="button is-danger is-medium">Annuler</a>
-                            <button class="button is-primary is-medium pull-right">Valider</button>
+                            <button type="submit" class="button is-primary is-medium pull-right">Valider</button>
                         </div>
                         {{ form_end(userForm) }}
                     </div>

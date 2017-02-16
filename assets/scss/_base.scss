@@ -6,6 +6,10 @@ body {
   width: 100%;
 }
 
+#header.hero {
+  background: linear-gradient(rgba($turquoise, .75), rgba($turquoise, .75)), url('../images/main-top-bg.jpg');
+}
+
 form {
   width: 100%;
 }

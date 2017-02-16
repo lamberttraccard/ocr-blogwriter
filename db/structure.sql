@@ -29,7 +29,8 @@ CREATE TABLE `comments` (
 CREATE TABLE `users` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(50) NOT NULL UNIQUE,
-  `email` VARCHAR(80) NOT NULL UNIQUE,
+  `display_name` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(80) NOT NULL,
   `password` VARCHAR(88) NOT NULL,
   `salt` VARCHAR(23) NOT NULL,
   `role` VARCHAR(50) NOT NULL,

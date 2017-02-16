@@ -70,6 +70,7 @@ class UserDAO extends DAO implements UserProviderInterface {
     {
         $userData = array(
             'username' => $user->getUsername(),
+            'display_name' => $user->getDisplayName(),
             'email' => $user->getEmail(),
             'salt'     => $user->getSalt(),
             'password' => $user->getPassword(),
@@ -96,6 +97,7 @@ class UserDAO extends DAO implements UserProviderInterface {
      */
     public function delete($id)
     {
+        $this->getDb()->delete('user_episode', ['user_id' => $id]);
         $this->getDb()->delete('users', ['id' => $id]);
     }
 
@@ -145,6 +147,7 @@ class UserDAO extends DAO implements UserProviderInterface {
         $user = new User();
         $user->setId($row['id']);
         $user->setUsername($row['username']);
+        $user->setDisplayName($row['display_name']);
         $user->setEmail($row['email']);
         $user->setPassword($row['password']);
         $user->setSalt($row['salt']);

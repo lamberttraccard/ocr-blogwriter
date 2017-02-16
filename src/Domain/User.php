@@ -24,6 +24,13 @@ class User implements UserInterface {
     private $username;
 
     /**
+     * Display name.
+     *
+     * @var string
+     */
+    private $displayName;
+
+    /**
      * User name.
      *
      * @var string
@@ -56,11 +63,12 @@ class User implements UserInterface {
     static public function loadValidatorMetadata(ClassMetadata $metadata)
     {
         $metadata->addPropertyConstraint('username', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('username', new Assert\Length(array('min' => 4)));
+        $metadata->addPropertyConstraint('username', new Assert\Length(array('min' => 4, 'max' => '50')));
         $metadata->addPropertyConstraint('email', new Assert\NotBlank());
         $metadata->addPropertyConstraint('email', new Assert\Email());
+        $metadata->addPropertyConstraint('email', new Assert\Length(array('max' => '80')));
         $metadata->addPropertyConstraint('password', new Assert\NotBlank());
-        $metadata->addPropertyConstraint('password', new Assert\Length(array('min' => 4)));
+        $metadata->addPropertyConstraint('password', new Assert\Length(array('min' => 4, 'max' => '88')));
         /*$metadata->addPropertyConstraint('username', new Unique(array(
             'field' => 'username',
             'entity' => 'user'
@@ -94,6 +102,21 @@ class User implements UserInterface {
     public function setUsername($username)
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDisplayName()
+    {
+        return $this->displayName;
+    }
+
+    public function setDisplayName($displayName)
+    {
+        $this->displayName = $displayName;
 
         return $this;
     }

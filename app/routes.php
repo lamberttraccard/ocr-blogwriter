@@ -26,3 +26,5 @@ $app->match('/account', '\BlogWriter\Controller\AccountController::indexAction')
 $app->match('/episode/{id}', '\BlogWriter\Controller\EpisodeController::indexAction')->bind('episode');
 $app->get('/episode/{id}/read', '\BlogWriter\Controller\EpisodeController::readAction')->bind('episode_read');
 $app->get('/episode/{id}/unread', '\BlogWriter\Controller\EpisodeController::unreadAction')->bind('episode_unread');
+
+$app->match('/api/user', '\BlogWriter\Controller\APIController::userAction')->bind('api_user');
