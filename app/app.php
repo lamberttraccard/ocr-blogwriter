@@ -91,7 +91,7 @@ $app['twig'] = $app->extend('twig', function (Twig_Environment $twig, $app)
     return $twig;
 });
 
-/*$app->error(function (\Exception $e, Request $request, $code) use ($app)
+$app->error(function (\Exception $e, Request $request, $code) use ($app)
 {
     switch ($code)
     {
@@ -106,7 +106,7 @@ $app['twig'] = $app->extend('twig', function (Twig_Environment $twig, $app)
     }
 
     return $app['twig']->render('error.html.twig', array('message' => $message));
-});*/
+});
 
 
 if (isset($app['validator.validator_factory']))
