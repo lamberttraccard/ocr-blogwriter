@@ -2,6 +2,9 @@
 
 namespace BlogWriter\Domain;
 
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Component\Validator\Constraints as Assert;
+
 class Comment {
 
     /**
@@ -33,6 +36,11 @@ class Comment {
      * @var string
      */
     private $createdAt;
+
+    static public function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('content', new Assert\NotBlank());
+    }
 
     public function getId()
     {
@@ -93,5 +101,8 @@ class Comment {
         return $this;
     }
 
-
+    public function getCreatedAtAgo()
+    {
+        return preg_replace('/(depuis) ()/i', 'il y a $2', timeAgoInWords($this->createdAt, 'Europe/Paris', 'fr'));
+    }
 }

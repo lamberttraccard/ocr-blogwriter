@@ -1,0 +1,18 @@
+{% extends "layout.html.twig" %}
+
+{% block siteTitle %}Erreur{% endblock %}
+{% block title %}Erreur{% endblock %}
+{% block subtitle %}Désolé mais une erreur s'est produite{% endblock %}
+
+{% block content %}
+    <section class="section is-medium">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-half is-offset-one-quarter">
+                    <p>{{ message }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

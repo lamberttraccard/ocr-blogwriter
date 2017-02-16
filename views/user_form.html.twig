@@ -1,64 +1,50 @@
 {% extends 'layout.html.twig' %}
-{% set adminMenu = true %}
 
 {% block siteTitle %}{{ title }}{% endblock %}
 {% block title %}{{ title }}{% endblock %}
 {% block subtitle %}{% endblock %}
 
 {% block content %}
-    {% for flashMessage in app.session.flashbag.get('success') %}
-        <div class="notification is-success">
-            {{ flashMessage }}
-        </div>
-    {% endfor %}
-    {% if form_errors(userForm.password.first) %}
-        <div class="notification is-danger">
-            {{ form_errors(userForm.password.first) }}
-        </div>
-    {% endif %}
-
     <section class="section is-medium">
         <div class="container">
-            <div class="panel">
-                {{ form_start(userForm, { 'attr': {'class': 'form-horizontal'} }) }}
-                <p class="control">
-                    {{ form_label(userForm.username, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
-                    {{ form_errors(userForm.username) }}
-                    {{ form_widget(userForm.username, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
-                    {{ form_label(userForm.password.first, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
-                    {{ form_widget(userForm.password.first, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
-                    {{ form_label(userForm.password.second, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
-                    {{ form_widget(userForm.password.second, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
-                    {{ form_label(userForm.role, null, { 'label_attr':  {
-                        'class': ''
-                    }}) }}
-                    {{ form_errors(userForm.role) }}
-                    {{ form_widget(userForm.role, { 'attr':  {
-                        'class': ''
-                    }}) }}
-                </p>
-                <p class="control">
-                    <button class="button is-primary is-medium pull-right">Valider</button>
-                </p>
-                {{ form_end(userForm) }}
+            <div class="columns">
+                <div class="column is-half is-offset-one-quarter">
+
+                    <div class="panel">
+                        {{ form_start(userForm) }}
+                        <div class="control">
+                            {{ form_label(userForm.username, 'Pseudo') }}
+                            {{ form_errors(userForm.username) }}
+                            {{ form_widget(userForm.username, { 'attr':  {
+                                'class': 'is-disabled'
+                            }}) }}
+                        </div>
+                        <div class="control">
+                            {{ form_label(userForm.displayName, 'Nom d\'affichage') }}
+                            {{ form_errors(userForm.displayName) }}
+                            {{ form_widget(userForm.displayName) }}
+                        </div>
+                        <div class="control">
+                            {{ form_label(userForm.email, 'Email') }}
+                            {{ form_errors(userForm.email) }}
+                            {{ form_widget(userForm.email) }}
+                        </div>
+                        <div class="control">
+                            {{ form_label(userForm.password.first, 'Mot de passe') }}
+                            {{ form_errors(userForm.password.first) }}
+                            {{ form_widget(userForm.password.first) }}
+                        </div>
+                        <div class="control">
+                            {{ form_label(userForm.password.second, 'Confirmer mot de passe') }}
+                            {{ form_widget(userForm.password.second) }}
+                        </div>
+                        <div class="control">
+                            <a href="{{ path('admin') }}" class="button is-danger is-medium">Annuler</a>
+                            <button type="submit" class="button is-primary is-medium pull-right">Valider</button>
+                        </div>
+                        {{ form_end(userForm) }}
+                    </div>
+                </div>
             </div>
         </div>
     </section>

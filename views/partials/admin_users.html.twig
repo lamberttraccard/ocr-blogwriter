@@ -1,0 +1,38 @@
+<section>
+    <a href="{{ path('admin_user_add') }}" class="button is-primary is-pulled-right is-medium has-mb-2">
+        <span>Ajouter un utilisateur</span><span class="icon"><i class="fa fa-plus-circle"></i></span>
+    </a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Avatar</th>
+            <th>Pseudo</th>
+            <th class="is-hidden-mobile">Nom d'affichage</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td><span class="image is-48x48"><img src="{{ user.gravatar }}" alt="avatar"></span></td>
+                <td class="">{{ user.username }}</td>
+                <td class="is-hidden-mobile is-capitalize">{{ user.displayName }}</td>
+                <td class="is-capitalize">{{ user.formatedRole }}</td>
+                <td class="has-text-right">
+                    <a href="{{ path('admin_user_edit', {'id': user.id }) }}" title="Modifier"
+                       class="button is-primary">
+                        <span class="icon"><i class="fa fa-pencil"></i></span>
+                    </a>
+                    <a href="{{ path('admin_user_delete', {'id': user.id }) }}" title="Supprimer"
+                       class="button is-danger">
+                        <span class="icon"><i class="fa fa-remove"></i></span>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>

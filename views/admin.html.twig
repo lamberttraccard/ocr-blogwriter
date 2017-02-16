@@ -1,21 +1,67 @@
 {% extends "layout.html.twig" %}
 
+{% block beforeTitle %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="image is-64x64 is-inline-block has-mb-1">
+            <img src="{{ app.user.gravatar }}" alt="avatar">
+        </div>
+    {% endif %}
+{% endblock %}
 {% block siteTitle %}Administration{% endblock %}
 {% block title %}Administration{% endblock %}
 {% block subtitle %}{% endblock %}
 
+{% block heroBodyExtra %}
+    <a href="{{ path('logout') }}" class="button is-primary is-outlined is-inverted has-mt-1">
+        <span>Se déconnecter</span><span class="icon"><i class="fa fa-sign-out"></i></span>
+    </a>
+{% endblock %}
+
 {% block heroFoot %}
-    <nav class="tabs is-boxed is-fullwidth">
+    <nav class="tabs is-boxed is-medium is-fullwidth">
         <div class="container">
             <ul>
-                <li class="is-active"><a>Episodes</a></li>
-                <li><a>Commentaires</a></li>
-                <li><a>Utilisateurs</a></li>
+                {% if episodes is defined %}
+                    {% set episodes_active = 'is-active' %}
+                {% else %}
+                    {% set episodes_active = '' %}
+                {% endif %}
+                {% if comments is defined %}
+                    {% set comments_active = 'is-active' %}
+                {% else %}
+                    {% set comments_active = '' %}
+                {% endif %}
+                {% if users is defined %}
+                    {% set users_active = 'is-active' %}
+                {% else %}
+                    {% set users_active = '' %}
+                {% endif %}
+
+                <li class="{{ episodes_active }}"><a href="{{ path('admin_episode_index') }}">Episodes</a></li>
+                <li class="{{ comments_active }}"><a href="{{ path('admin_comment_index') }}">Commentaires</a></li>
+                <li class="{{ users_active }}"><a href="{{ path('admin_user_index') }}">Utilisateurs</a></li>
             </ul>
         </div>
     </nav>
 {% endblock %}
 
 {% block content %}
+    <section class="section is-medium the-content">
+        <div id="tabs-container" class="container">
 
+            {% if episodes is defined %}
+                {% include('partials/admin_episodes.html.twig') %}
+            {% endif %}
+            {% if comments is defined %}
+                {% include('partials/admin_comments.html.twig') %}
+            {% endif %}
+            {% if users is defined %}
+                {% include('partials/admin_users.html.twig') %}
+            {% endif %}
+
+            {#{% include('partials/nav.html.twig') %}#}
+
+        </div>
+
+    </section>
 {% endblock %}

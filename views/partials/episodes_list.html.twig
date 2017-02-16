@@ -1,0 +1,23 @@
+<ul>
+    {% for key in episodes|keys %}
+        {% if episodesRead[key] is defined %}
+            {% set read = "read" %}
+            {% set route = "episode_unread" %}
+            {% set buttonIcon = 'fa-eye-slash' %}
+        {% else %}
+            {% set read = "" %}
+            {% set route = "episode_read" %}
+            {% set buttonIcon = 'fa-eye' %}
+        {% endif %}
+
+        <li class="{{ read }}">
+            <a href="{{ path('episode', {'id' : episodes[key].id }) }}">
+                <h3 class="title is-3">{{ episodes[key].title }}</h3>
+                <p class="subtitle">{{ episodes[key].subtitle }}</p>
+            </a>
+            <a class="button is-primary" href="{{ path(route, {'id' : episodes[key].id }) }}">
+                <span class="icon"><i class="fa {{ buttonIcon }}"></i></span>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

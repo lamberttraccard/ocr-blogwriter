@@ -1,0 +1,39 @@
+.notification {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  .delete {
+    position: relative;
+    top: auto;
+    right: auto;
+    flex: none;
+  }
+}
+
+.panel-heading {
+  padding: 1rem;
+}
+
+.panel-block {
+  padding: 1rem;
+}
+
+.tabs {
+  justify-content: space-around;
+}
+
+.table td,
+.table th {
+  font-size: 1.15rem;
+  vertical-align: middle;
+}

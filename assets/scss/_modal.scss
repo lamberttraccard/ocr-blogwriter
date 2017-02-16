@@ -1,0 +1,27 @@
+/* Default Animation */
+
+.modal.fade-and-drop .modal-card {
+  transform: translate(0, -1000px);
+  opacity: 0;
+  transition: all 200ms ease-in-out;
+}
+
+.modal.fade-and-drop.is-active .modal-card {
+  transform: translate(0);
+  opacity: 1;
+  transition: all 200ms ease-in-out 100ms;
+}
+
+.modal.fade-and-drop .modal-background {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out 100ms;
+}
+
+.modal.fade-and-drop.is-active .modal-background {
+  opacity: 1;
+  transition: opacity 200ms ease-in-out;
+}
+
+.modal {
+  display: flex;
+}

@@ -9,8 +9,10 @@ CREATE TABLE `episodes` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(100) NOT NULL,
   `subtitle` VARCHAR(100) NOT NULL,
-  `content` TEXT NOT NULL,
-  `created_at` TIMESTAMP NOT NULL,
+  `content` TEXT,
+  `style` VARCHAR(100) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
@@ -19,25 +21,28 @@ CREATE TABLE `comments` (
   `content` TEXT NOT NULL,
   `episode_id` INTEGER NOT NULL,
   `user_id` INTEGER NOT NULL,
-  `created_at` TIMESTAMP NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `users` (
   `id` INTEGER NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(50) NOT NULL,
+  `username` VARCHAR(50) NOT NULL UNIQUE,
+  `display_name` VARCHAR(50) NOT NULL,
+  `email` VARCHAR(80) NOT NULL,
   `password` VARCHAR(88) NOT NULL,
   `salt` VARCHAR(23) NOT NULL,
   `role` VARCHAR(50) NOT NULL,
-  `created_at` TIMESTAMP NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `user_episode` (
   `user_id` INTEGER NOT NULL,
   `episode_id` INTEGER NOT NULL,
-  `view` BOOLEAN NOT NULL,
-  `created_at` TIMESTAMP NOT NULL
+  `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE `comments` ADD FOREIGN KEY (`episode_id`) REFERENCES `episodes`(`id`);

@@ -3,8 +3,48 @@
 namespace BlogWriter\DAO;
 
 use BlogWriter\Domain\Episode;
+use BlogWriter\Domain\User;
 
 class EpisodeDAO extends DAO {
+
+    /**
+     * Returns an episode matching the supplied id.
+     *
+     * @param integer $id The episode id.
+     * @throws \Exception if no matching episode is found
+     * @return \BlogWriter\Domain\Episode
+     */
+    public function find($id)
+    {
+        $sql = "select * from episodes where id=?";
+        $row = $this->getDb()->fetchAssoc($sql, [$id]);
+
+        if ($row) return $this->buildDomainObject($row);
+
+        throw new \Exception("No episode matching id " . $id);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function findOneBy(array $array)
+    {
+        $sql = "select * from episodes where $array[0]=?";
+        $row = $this->getDb()->fetchAssoc($sql, [$array[1]]);
+
+        if ($row) return $this->buildDomainObject($row);
+
+        return false;
+    }
+
+    /**
+     * Get total episodes
+     * @return int
+     */
+    public function getTotal()
+    {
+        return $this->getDb()->query("select id from episodes")->rowCount();
+    }
 
     /**
      * Return a list of all episodes, sorted by date (oldest first).
@@ -17,7 +57,7 @@ class EpisodeDAO extends DAO {
         $result = $this->getDb()->fetchAll($sql);
 
         // Convert query result to an array of domain objects
-        $episodes = array();
+        $episodes = [];
         foreach ($result as $row)
         {
             $id = $row['id'];
@@ -28,22 +68,31 @@ class EpisodeDAO extends DAO {
     }
 
     /**
-     * Returns an episode matching the supplied id.
+     * Get the next episode
      *
-     * @param integer $id The episode id.
-     * @throws \Exception if no matching episode is found
-     *
-     * @return \BlogWriter\Domain\Episode
+     * @param $id
+     * @return Episode|null
      */
-    public function find($id)
+    public function findNext($id)
     {
-        $sql = "select * from episodes where id=?";
-        $row = $this->getDb()->fetchAssoc($sql, array($id));
+        $sql = "select * from episodes where id = (select min(id) from episodes where id > ?)";
+        $row = $this->getDb()->fetchAssoc($sql, [$id]);
 
-        if ($row)
-            return $this->buildDomainObject($row);
-        else
-            throw new \Exception("No episode matching id " . $id);
+        return $row ? $this->buildDomainObject($row) : null;
+    }
+
+    /**
+     * Get the previous episode
+     *
+     * @param $id
+     * @return Episode|null
+     */
+    public function findPrevious($id)
+    {
+        $sql = "select * from episodes where id = (select max(id) from episodes where id < ?)";
+        $row = $this->getDb()->fetchAssoc($sql, [$id]);
+
+        return $row ? $this->buildDomainObject($row) : null;
     }
 
     /**
@@ -51,23 +100,77 @@ class EpisodeDAO extends DAO {
      *
      * @param \BlogWriter\Domain\Episode $episode The episode to save
      */
-    public function save(Episode $episode) {
-        $episodeData = array(
-            'title' => $episode->getTitle(),
+    public function save(Episode $episode)
+    {
+        $episodeData = [
+            'title'    => $episode->getTitle(),
             'subtitle' => $episode->getSubtitle(),
-            'content' => $episode->getContent(),
-        );
+            'content'  => $episode->getContent(),
+            'style' => $episode->getStyle()
+        ];
 
-        if ($episode->getId()) {
+        if ($episode->getId())
+        {
             // The episode has already been saved : update it
-            $this->getDb()->update('episodes', $episodeData, array('id' => $episode->getId()));
-        } else {
+            $this->getDb()->update('episodes', $episodeData, ['id' => $episode->getId()]);
+        } else
+        {
             // The episode has never been saved : insert it
             $this->getDb()->insert('episodes', $episodeData);
-            // Get the id of the newly created episode and set it on the entity.
             $id = $this->getDb()->lastInsertId();
             $episode->setId($id);
         }
+    }
+
+    /**
+     * Mark an episode as read
+     *
+     * @param Episode $episode
+     * @param User $user
+     */
+    public function markAsRead(Episode $episode, User $user)
+    {
+        $this->getDb()->insert('user_episode', [
+            'user_id'    => $user->getId(),
+            'episode_id' => $episode->getId()
+        ]);
+    }
+
+    /**
+     * Mark an episode as unread
+     *
+     * @param Episode $episode
+     * @param User $user
+     */
+    public function markAsUnread(Episode $episode, User $user)
+    {
+        $this->getDb()->delete('user_episode', [
+            'user_id'    => $user->getId(),
+            'episode_id' => $episode->getId()
+        ]);
+    }
+
+    /**
+     * Get the episodes read by a user
+     *
+     * @param User $user
+     * @return array|null
+     */
+    public function findRead(User $user)
+    {
+        $sql = "select * from user_episode inner join episodes on id=episode_id where user_id=? order by episode_id asc";
+        $result = $this->getDb()->fetchAll($sql, [$user->getId()]);
+
+        if (!$result) return null;
+
+        $episodes = [];
+        foreach ($result as $row)
+        {
+            $id = $row['episode_id'];
+            $episodes[$id] = $this->buildDomainObject($row);
+        }
+
+        return $episodes;
     }
 
     /**
@@ -75,9 +178,10 @@ class EpisodeDAO extends DAO {
      *
      * @param integer $id The episode id.
      */
-    public function delete($id) {
-        // Delete the episode
-        $this->getDb()->delete('episodes', array('id' => $id));
+    public function delete($id)
+    {
+        $this->getDb()->delete('user_episode', ['episode_id' => $id]);
+        $this->getDb()->delete('episodes', ['id' => $id]);
     }
 
     /**
@@ -93,6 +197,7 @@ class EpisodeDAO extends DAO {
         $episode->setTitle($row['title']);
         $episode->setSubtitle($row['subtitle']);
         $episode->setContent($row['content']);
+        $episode->setStyle($row['style']);
         $episode->setCreatedAt($row['created_at']);
 
         return $episode;

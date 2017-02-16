@@ -4,8 +4,8 @@ namespace BlogWriter\DAO;
 
 use BlogWriter\Domain\Comment;
 
-class CommentDAO extends DAO
-{
+class CommentDAO extends DAO {
+
     /**
      * @var \BlogWriter\DAO\EpisodeDAO
      */
@@ -16,11 +16,20 @@ class CommentDAO extends DAO
      */
     private $userDAO;
 
-    public function setEpisodeDAO(EpisodeDAO $episodeDAO) {
+
+    /**
+     * @param \BlogWriter\DAO\EpisodeDAO $episodeDAO
+     */
+    public function setEpisodeDAO(EpisodeDAO $episodeDAO)
+    {
         $this->episodeDAO = $episodeDAO;
     }
 
-    public function setUserDAO($userDAO) {
+    /**
+     * @param \BlogWriter\DAO\UserDAO $userDAO
+     */
+    public function setUserDAO(UserDAO $userDAO)
+    {
         $this->userDAO = $userDAO;
     }
 
@@ -31,14 +40,44 @@ class CommentDAO extends DAO
      * @throws \Exception if no matching comment is found
      * @return \BlogWriter\Domain\Comment
      */
-    public function find($id) {
+    public function find($id)
+    {
         $sql = "select * from comments where id=?";
-        $row = $this->getDb()->fetchAssoc($sql, array($id));
+        $row = $this->getDb()->fetchAssoc($sql, [$id]);
 
-        if ($row)
-            return $this->buildDomainObject($row);
-        else
-            throw new \Exception("No comment matching id " . $id);
+        if ($row) return $this->buildDomainObject($row);
+
+        throw new \Exception("No comment matching id " . $id);
+    }
+
+    public function findOneBy(array $array)
+    {
+        $sql = "select * from comments where $array[0]=?";
+        $row = $this->getDb()->fetchAssoc($sql, [$array[1]]);
+
+        if ($row) return $this->buildDomainObject($row);
+
+        return false;
+    }
+
+    /**
+     * Returns a list of all comments, sorted by date (most recent first).
+     *
+     * @return array A list of all comments.
+     */
+    public function findAll()
+    {
+        $sql = "select * from comments order by created_at";
+        $result = $this->getDb()->fetchAll($sql);
+
+        $entities = [];
+        foreach ($result as $row)
+        {
+            $id = $row['id'];
+            $entities[$id] = $this->buildDomainObject($row);
+        }
+
+        return $entities;
     }
 
     /**
@@ -46,9 +85,9 @@ class CommentDAO extends DAO
      *
      * @param integer $id The comment id
      */
-    public function delete($id) {
-        // Delete the comment
-        $this->getDb()->delete('comments', array('id' => $id));
+    public function delete($id)
+    {
+        $this->getDb()->delete('comments', ['id' => $id]);
     }
 
 
@@ -59,23 +98,25 @@ class CommentDAO extends DAO
      *
      * @return array A list of all comments for the episode.
      */
-    public function findAllByEpisode($episodeId) {
+    public function findAllByEpisode($episodeId)
+    {
         // The associated episode is retrieved only once
         $episode = $this->episodeDAO->find($episodeId);
 
         // The episode won't be retrieved during domain objet construction
         $sql = "select id, content, user_id, created_at from comments where episode_id=? order by created_at";
-        $result = $this->getDb()->fetchAll($sql, array($episodeId));
+        $result = $this->getDb()->fetchAll($sql, [$episodeId]);
 
         // Convert query result to an array of domain objects
-        $comments = array();
-        foreach ($result as $row) {
+        $comments = [];
+        foreach ($result as $row)
+        {
             $id = $row['id'];
             $comment = $this->buildDomainObject($row);
-            // The associated episode is defined for the constructed comment
             $comment->setEpisode($episode);
             $comments[$id] = $comment;
         }
+
         return $comments;
     }
 
@@ -84,20 +125,22 @@ class CommentDAO extends DAO
      *
      * @param \BlogWriter\Domain\Comment $comment The comment to save
      */
-    public function save(Comment $comment) {
+    public function save(Comment $comment)
+    {
         $commentData = array(
             'episode_id' => $comment->getEpisode()->getId(),
-            'user_id' => $comment->getAuthor()->getId(),
-            'content' => $comment->getContent(),
+            'user_id'    => $comment->getAuthor()->getId(),
+            'content'    => $comment->getContent(),
         );
 
-        if ($comment->getId()) {
+        if ($comment->getId())
+        {
             // The comment has already been saved : update it
-            $this->getDb()->update('comments', $commentData, array('id' => $comment->getId()));
-        } else {
+            $this->getDb()->update('comments', $commentData, ['id' => $comment->getId()]);
+        } else
+        {
             // The comment has never been saved : insert it
             $this->getDb()->insert('comments', $commentData);
-            // Get the id of the newly created comment and set it on the entity.
             $id = $this->getDb()->lastInsertId();
             $comment->setId($id);
         }
@@ -108,8 +151,9 @@ class CommentDAO extends DAO
      *
      * @param integer $episodeId The id of the episode
      */
-    public function deleteAllByEpisode($episodeId) {
-        $this->getDb()->delete('comments', array('episode_id' => $episodeId));
+    public function deleteAllByEpisode($episodeId)
+    {
+        $this->getDb()->delete('comments', ['episode_id' => $episodeId]);
     }
 
     /**
@@ -117,8 +161,9 @@ class CommentDAO extends DAO
      *
      * @param integer $userId The id of the user
      */
-    public function deleteAllByUser($userId) {
-        $this->getDb()->delete('comments', array('user_id' => $userId));
+    public function deleteAllByUser($userId)
+    {
+        $this->getDb()->delete('comments', ['user_id' => $userId]);
     }
 
     /**
@@ -127,19 +172,22 @@ class CommentDAO extends DAO
      * @param array $row The DB row containing Comment data.
      * @return \BlogWriter\Domain\Comment
      */
-    protected function buildDomainObject(array $row) {
+    protected function buildDomainObject(array $row)
+    {
         $comment = new Comment();
         $comment->setId($row['id']);
         $comment->setContent($row['content']);
         $comment->setCreatedAt($row['created_at']);
 
-        if (array_key_exists('episode_id', $row)) {
+        if (array_key_exists('episode_id', $row))
+        {
             // Find and set the associated episode
             $episodeId = $row['episode_id'];
             $episode = $this->episodeDAO->find($episodeId);
             $comment->setEpisode($episode);
         }
-        if (array_key_exists('user_id', $row)) {
+        if (array_key_exists('user_id', $row))
+        {
             // Find and set the associated author
             $userId = $row['user_id'];
             $user = $this->userDAO->find($userId);
