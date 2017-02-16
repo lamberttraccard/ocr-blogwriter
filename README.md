@@ -18,8 +18,12 @@ yarn install
 ```bash
 composer install
 ```
-puis pour compiler les fichiers sass et js
+compiler les fichiers sass et js
 
 ```bash
 yarn run dev
 ```
+
+créer la BDD et migrer les données accessible dans le repertoire db.
+
+
